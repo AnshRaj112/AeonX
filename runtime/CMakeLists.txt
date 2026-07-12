@@ -1,0 +1,6 @@
+add_library(myc_runtime STATIC src/runtime_module.cpp)
+target_include_directories(myc_runtime PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_runtime PUBLIC myc_shared)
+myc_set_target_standard(myc_runtime)
+myc_set_warnings(myc_runtime)
+add_library(myc::runtime ALIAS myc_runtime)

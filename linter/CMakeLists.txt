@@ -1,0 +1,6 @@
+add_library(myc_linter STATIC src/linter_module.cpp)
+target_include_directories(myc_linter PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_linter PUBLIC myc_semantic myc_diagnostics)
+myc_set_target_standard(myc_linter)
+myc_set_warnings(myc_linter)
+add_library(myc::linter ALIAS myc_linter)

@@ -1,0 +1,6 @@
+add_library(myc_optimizer STATIC src/optimizer_module.cpp)
+target_include_directories(myc_optimizer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_optimizer PUBLIC myc_ir)
+myc_set_target_standard(myc_optimizer)
+myc_set_warnings(myc_optimizer)
+add_library(myc::optimizer ALIAS myc_optimizer)

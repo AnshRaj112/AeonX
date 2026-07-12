@@ -1,0 +1,6 @@
+add_library(myc_codegen STATIC src/codegen_module.cpp)
+target_include_directories(myc_codegen PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_codegen PUBLIC myc_ir)
+myc_set_target_standard(myc_codegen)
+myc_set_warnings(myc_codegen)
+add_library(myc::codegen ALIAS myc_codegen)

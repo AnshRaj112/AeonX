@@ -1,0 +1,6 @@
+add_library(myc_typechecker STATIC src/typechecker_module.cpp)
+target_include_directories(myc_typechecker PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_typechecker PUBLIC myc_semantic)
+myc_set_target_standard(myc_typechecker)
+myc_set_warnings(myc_typechecker)
+add_library(myc::typechecker ALIAS myc_typechecker)

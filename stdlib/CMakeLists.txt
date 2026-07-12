@@ -1,0 +1,6 @@
+add_library(myc_stdlib STATIC src/stdlib_module.cpp)
+target_include_directories(myc_stdlib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_stdlib PUBLIC myc_runtime)
+myc_set_target_standard(myc_stdlib)
+myc_set_warnings(myc_stdlib)
+add_library(myc::stdlib ALIAS myc_stdlib)

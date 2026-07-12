@@ -1,0 +1,6 @@
+add_library(myc_ide STATIC src/ide_module.cpp)
+target_include_directories(myc_ide PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_ide PUBLIC myc_language_server)
+myc_set_target_standard(myc_ide)
+myc_set_warnings(myc_ide)
+add_library(myc::ide ALIAS myc_ide)

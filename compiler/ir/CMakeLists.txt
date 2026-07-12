@@ -1,0 +1,6 @@
+add_library(myc_ir STATIC src/ir_module.cpp)
+target_include_directories(myc_ir PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_ir PUBLIC myc_mir)
+myc_set_target_standard(myc_ir)
+myc_set_warnings(myc_ir)
+add_library(myc::ir ALIAS myc_ir)

@@ -1,0 +1,6 @@
+add_library(myc_frontend STATIC src/frontend_module.cpp)
+target_include_directories(myc_frontend PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_frontend PUBLIC myc_parser myc_semantic)
+myc_set_target_standard(myc_frontend)
+myc_set_warnings(myc_frontend)
+add_library(myc::frontend ALIAS myc_frontend)

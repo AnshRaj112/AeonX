@@ -1,0 +1,6 @@
+# Hello World placeholder for the Myc programming language.
+# This file will be compilable once the language frontend is implemented.
+
+fn main() {
+    # print("Hello, Myc!")
+}

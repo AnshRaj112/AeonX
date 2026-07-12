@@ -1,0 +1,4 @@
+add_executable(myc_benchmark_placeholder src/benchmark_placeholder.cpp)
+target_link_libraries(myc_benchmark_placeholder PRIVATE myc_shared)
+myc_set_target_standard(myc_benchmark_placeholder)
+myc_set_warnings(myc_benchmark_placeholder)

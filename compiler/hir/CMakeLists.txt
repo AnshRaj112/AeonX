@@ -1,0 +1,6 @@
+add_library(myc_hir STATIC src/hir_module.cpp)
+target_include_directories(myc_hir PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_hir PUBLIC myc_typechecker)
+myc_set_target_standard(myc_hir)
+myc_set_warnings(myc_hir)
+add_library(myc::hir ALIAS myc_hir)

@@ -1,0 +1,6 @@
+add_library(myc_package_manager STATIC src/package_manager_module.cpp)
+target_include_directories(myc_package_manager PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_package_manager PUBLIC myc_shared)
+myc_set_target_standard(myc_package_manager)
+myc_set_warnings(myc_package_manager)
+add_library(myc::package_manager ALIAS myc_package_manager)

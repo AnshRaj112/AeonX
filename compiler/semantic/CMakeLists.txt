@@ -1,0 +1,6 @@
+add_library(myc_semantic STATIC src/semantic_module.cpp)
+target_include_directories(myc_semantic PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_semantic PUBLIC myc_ast myc_diagnostics)
+myc_set_target_standard(myc_semantic)
+myc_set_warnings(myc_semantic)
+add_library(myc::semantic ALIAS myc_semantic)

@@ -1,0 +1,6 @@
+add_library(myc_backend STATIC src/backend_module.cpp)
+target_include_directories(myc_backend PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_backend PUBLIC myc_codegen myc_llvm_backend)
+myc_set_target_standard(myc_backend)
+myc_set_warnings(myc_backend)
+add_library(myc::backend ALIAS myc_backend)

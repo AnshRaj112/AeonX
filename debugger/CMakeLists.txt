@@ -1,0 +1,6 @@
+add_library(myc_debugger STATIC src/debugger_module.cpp)
+target_include_directories(myc_debugger PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_debugger PUBLIC myc_codegen)
+myc_set_target_standard(myc_debugger)
+myc_set_warnings(myc_debugger)
+add_library(myc::debugger ALIAS myc_debugger)

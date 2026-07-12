@@ -1,0 +1,6 @@
+add_library(myc_formatter STATIC src/formatter_module.cpp)
+target_include_directories(myc_formatter PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(myc_formatter PUBLIC myc_frontend)
+myc_set_target_standard(myc_formatter)
+myc_set_warnings(myc_formatter)
+add_library(myc::formatter ALIAS myc_formatter)
