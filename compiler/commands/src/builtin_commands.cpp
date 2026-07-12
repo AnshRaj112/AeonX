@@ -3,7 +3,6 @@
 #include "myc/common/cli_output.hpp"
 #include "myc/logging/logger.hpp"
 
-#include <filesystem>
 #include <iostream>
 
 namespace myc::commands {
@@ -48,11 +47,9 @@ exitcodes::ExitCode BuildCommand::Execute(const CommandContext& ctx) const {
     LogSourceFiles("build input", ctx);
 
     for (const auto& file : ctx.options.source_files) {
-        if (!std::filesystem::exists(file)) {
-            ctx.diagnostics.EmitError("D0001", "source file not found: " + file);
+        if (!ctx.source_manager.LoadFile(file)) {
             return exitcodes::ExitCode::FileNotFound;
         }
-        (void)ctx.source_manager.LoadFile(file);
     }
 
     return result;

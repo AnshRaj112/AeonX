@@ -283,6 +283,7 @@ void CompilerDriver::LoadEnvironmentOverrides() {
 
 void CompilerDriver::InitializeDiagnostics(const cli::CliOptions& options) {
     diagnostics_.Clear();
+    source_manager_.SetDiagnosticsEngine(&diagnostics_);
 
     const config::DiagnosticConfiguration& cfg = config_.GetDiagnosticConfiguration();
     diagnostics::DiagnosticsPolicy policy{

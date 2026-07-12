@@ -1,44 +1,59 @@
 #pragma once
 
+#include "myc/source/line_table.hpp"
+#include "myc/source/source_file_id.hpp"
 #include "myc/types.hpp"
 
 #include <cstddef>
+#include <optional>
+#include <stdexcept>
 #include <string>
 #include <string_view>
-#include <vector>
 
 namespace myc::source {
 
-/// Immutable in-memory representation of a single source file.
+/// Efficient read-only view over immutable source text.
 class SourceBuffer {
-public:
-    SourceBuffer(FileId id, std::string path, std::string content);
+ public:
+  SourceBuffer(SourceFileID id, std::string path, std::string content, LineTable line_table,
+               bool valid_utf8);
 
-    [[nodiscard]] FileId GetId() const noexcept;
-    [[nodiscard]] const std::string& GetPath() const noexcept;
-    [[nodiscard]] std::string_view GetContent() const noexcept;
-    [[nodiscard]] std::size_t GetSize() const noexcept;
+  [[nodiscard]] SourceFileID GetId() const noexcept;
+  [[nodiscard]] FileId GetFileId() const noexcept;
+  [[nodiscard]] const std::string& GetPath() const noexcept;
+  [[nodiscard]] std::string_view GetContent() const noexcept;
+  [[nodiscard]] std::size_t GetSize() const noexcept;
 
-    /// Returns true if content is valid UTF-8.
-    [[nodiscard]] bool IsValidUtf8() const noexcept;
+  [[nodiscard]] bool IsValidUtf8() const noexcept;
+  [[nodiscard]] const LineTable& GetLineTable() const noexcept;
 
-    /// Maps a byte offset to a 1-based line and column.
-    [[nodiscard]] std::pair<LineNumber, ColumnNumber> GetLineAndColumn(
-        std::size_t offset) const;
+  /// Returns the byte at offset. Throws std::out_of_range when out of bounds.
+  [[nodiscard]] char At(std::size_t offset) const;
 
-    /// Returns the byte offset of the start of the given 1-based line.
-    [[nodiscard]] std::size_t GetLineStartOffset(LineNumber line) const;
+  /// Returns the byte at offset, or std::nullopt when out of bounds.
+  [[nodiscard]] std::optional<char> TryAt(std::size_t offset) const noexcept;
 
-    [[nodiscard]] LineNumber GetLineCount() const noexcept;
+  /// Returns a substring view. Throws when the range is invalid.
+  [[nodiscard]] std::string_view Substring(std::size_t start, std::size_t length) const;
 
-private:
-    void BuildLineIndex();
+  /// Returns a half-open slice [start, end). Throws when the range is invalid.
+  [[nodiscard]] std::string_view Slice(std::size_t start, std::size_t end) const;
 
-    FileId id_;
-    std::string path_;
-    std::string content_;
-    std::vector<std::size_t> line_starts_;
-    bool valid_utf8_{true};
+  [[nodiscard]] std::pair<LineNumber, ColumnNumber> GetLineAndColumn(
+      std::size_t offset) const noexcept;
+
+  [[nodiscard]] std::size_t GetLineStartOffset(LineNumber line) const noexcept;
+  [[nodiscard]] LineNumber GetLineCount() const noexcept;
+  [[nodiscard]] std::string_view GetLine(LineNumber line) const noexcept;
+
+ private:
+  void ValidateRange(std::size_t start, std::size_t end) const;
+
+  SourceFileID id_;
+  std::string path_;
+  std::string content_;
+  LineTable line_table_;
+  bool valid_utf8_{true};
 };
 
 }  // namespace myc::source

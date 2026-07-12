@@ -1,4 +1,13 @@
-add_library(myc_lexer STATIC src/lexer_module.cpp)
+add_library(myc_lexer STATIC
+    src/keyword.cpp
+    src/lexer_module.cpp
+    src/operator.cpp
+    src/token_category_map.cpp
+    src/token_factory.cpp
+    src/token_printer.cpp
+    src/token_stream.cpp
+    src/token_type.cpp
+)
 
 target_include_directories(myc_lexer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(myc_lexer PUBLIC myc_shared myc_source)

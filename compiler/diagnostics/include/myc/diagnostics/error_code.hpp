@@ -31,6 +31,11 @@ inline const ErrorCode EmptyExpression{"MYC0002"};
 inline const ErrorCode InvalidSyntax{"MYC0100"};
 inline const ErrorCode TypeMismatch{"MYC1000"};
 
+extern const ErrorCode SourceFileNotFound;
+extern const ErrorCode SourceFileReadError;
+extern const ErrorCode SourceInvalidEncoding;
+extern const ErrorCode SourcePathInvalid;
+
 inline const ErrorCode DriverFileNotFound{"MYC9001"};
 inline const ErrorCode DriverNoCommand{"MYC9002"};
 inline const ErrorCode DriverUnknownCommand{"MYC9003"};
