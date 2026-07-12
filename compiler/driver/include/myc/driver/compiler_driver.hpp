@@ -1,8 +1,8 @@
 #pragma once
 
+#include "myc/cli/cli_options.hpp"
 #include "myc/config/compiler_config.hpp"
 #include "myc/diagnostics/diagnostic_engine.hpp"
-#include "myc/driver/cli_parser.hpp"
 #include "myc/driver/command_dispatcher.hpp"
 #include "myc/source/source_manager.hpp"
 
@@ -22,8 +22,11 @@ public:
     [[nodiscard]] source::SourceManager& GetSourceManager();
 
 private:
-    void LoadConfiguration(const CliOptions& options);
-    void InitializeDiagnostics();
+    void ConfigureLogging(const cli::CliOptions& options);
+    void LoadConfiguration(const cli::CliOptions& options);
+    void LoadEnvironmentOverrides();
+    void InitializeDiagnostics(const cli::CliOptions& options);
+    [[nodiscard]] int HandleParseError(const std::string& message);
 
     config::CompilerConfig config_;
     diagnostics::DiagnosticEngine diagnostics_;

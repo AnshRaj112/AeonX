@@ -1,13 +1,14 @@
 #pragma once
 
+#include "myc/cli/cli_options.hpp"
+#include "myc/commands/abstract_command.hpp"
 #include "myc/config/compiler_config.hpp"
 #include "myc/diagnostics/diagnostic_engine.hpp"
-#include "myc/driver/cli_parser.hpp"
 #include "myc/source/source_manager.hpp"
 
 namespace myc::driver {
 
-/// Dispatches parsed CLI commands to their handlers.
+/// Dispatches parsed CLI commands through the command registry.
 class CommandDispatcher {
 public:
     CommandDispatcher(config::CompilerConfig& config,
@@ -15,14 +16,11 @@ public:
                       source::SourceManager& source_manager);
 
     /// Executes the requested command. Returns process exit code.
-    [[nodiscard]] int Dispatch(const CliOptions& options);
+    [[nodiscard]] int Dispatch(const cli::CliOptions& options);
 
 private:
-    [[nodiscard]] int RunBuild(const CliOptions& options);
-    [[nodiscard]] int RunRun(const CliOptions& options);
-    [[nodiscard]] int RunFmt(const CliOptions& options);
-    [[nodiscard]] int RunLint(const CliOptions& options);
-    [[nodiscard]] int RunBenchmark(const CliOptions& options);
+    [[nodiscard]] int ExecuteCommand(const commands::AbstractCommand& command,
+                                     const cli::CliOptions& options);
 
     config::CompilerConfig& config_;
     diagnostics::DiagnosticEngine& diagnostics_;

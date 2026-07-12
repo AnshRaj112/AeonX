@@ -1,5 +1,4 @@
 add_library(myc_driver STATIC
-    src/cli_parser.cpp
     src/command_dispatcher.cpp
     src/compiler_driver.cpp
 )
@@ -11,8 +10,12 @@ target_include_directories(myc_driver
 
 target_link_libraries(myc_driver
     PUBLIC
+        myc_cli
+        myc_commands
+        myc_common
         myc_config
         myc_diagnostics
+        myc_exitcodes
         myc_source
         myc_shared
 )

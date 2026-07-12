@@ -8,7 +8,7 @@ add_executable(myc_tests
 )
 
 target_include_directories(myc_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(myc_tests PRIVATE myc_driver myc_shared)
+target_link_libraries(myc_tests PRIVATE myc_driver myc_commands myc_cli myc_shared)
 
 myc_set_target_standard(myc_tests)
 myc_set_warnings(myc_tests)

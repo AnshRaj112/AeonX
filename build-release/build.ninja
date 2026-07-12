@@ -12,7 +12,7 @@
 
 # =============================================================================
 # Project: Myc
-# Configurations: Release
+# Configurations: Debug
 # =============================================================================
 
 #############################################
@@ -24,7 +24,7 @@ ninja_required_version = 1.5
 #############################################
 # Set configuration variable for custom commands.
 
-CONFIGURATION = Release
+CONFIGURATION = Debug
 # =============================================================================
 # Include auxiliary files.
 
@@ -47,17 +47,15 @@ cmake_ninja_workdir = C$:/AeonX/build-release/
 #############################################
 # Order-only phony target for myc
 
-build cmake_object_order_depends_target_myc: phony || cmake_object_order_depends_target_myc_config cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_driver cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_source
+build cmake_object_order_depends_target_myc: phony || cmake_object_order_depends_target_myc_cli cmake_object_order_depends_target_myc_commands cmake_object_order_depends_target_myc_common cmake_object_order_depends_target_myc_config cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_driver cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_source
 
-build CMakeFiles/myc.dir/compiler/driver/src/main.cpp.obj: CXX_COMPILER__myc_unscanned_Release C$:/AeonX/compiler/driver/src/main.cpp || cmake_object_order_depends_target_myc
-  CONFIG = Release
+build CMakeFiles/myc.dir/compiler/driver/src/main.cpp.obj: CXX_COMPILER__myc_unscanned_Debug C$:/AeonX/compiler/driver/src/main.cpp || cmake_object_order_depends_target_myc
+  CONFIG = Debug
   DEP_FILE = CMakeFiles\myc.dir\compiler\driver\src\main.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
   OBJECT_DIR = CMakeFiles\myc.dir
   OBJECT_FILE_DIR = CMakeFiles\myc.dir\compiler\driver\src
-  TARGET_COMPILE_PDB = CMakeFiles\myc.dir\
-  TARGET_PDB = bin\myc.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\myc.dir
 
 
@@ -68,17 +66,16 @@ build CMakeFiles/myc.dir/compiler/driver/src/main.cpp.obj: CXX_COMPILER__myc_uns
 #############################################
 # Link the executable bin\myc.exe
 
-build bin/myc.exe: CXX_EXECUTABLE_LINKER__myc_Release CMakeFiles/myc.dir/compiler/driver/src/main.cpp.obj | compiler/driver/libmyc_driver.a compiler/config/libmyc_config.a compiler/source/libmyc_source.a compiler/diagnostics/libmyc_diagnostics.a shared/src/libmyc_shared.a || compiler/config/libmyc_config.a compiler/diagnostics/libmyc_diagnostics.a compiler/driver/libmyc_driver.a compiler/source/libmyc_source.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  FLAGS = -O3 -DNDEBUG
-  LINK_LIBRARIES = compiler/driver/libmyc_driver.a  compiler/config/libmyc_config.a  compiler/source/libmyc_source.a  compiler/diagnostics/libmyc_diagnostics.a  shared/src/libmyc_shared.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+build bin/myc.exe: CXX_EXECUTABLE_LINKER__myc_Debug CMakeFiles/myc.dir/compiler/driver/src/main.cpp.obj | compiler/driver/libmyc_driver.a compiler/commands/libmyc_commands.a compiler/cli/libmyc_cli.a compiler/common/libmyc_common.a compiler/config/libmyc_config.a compiler/source/libmyc_source.a compiler/diagnostics/libmyc_diagnostics.a shared/src/libmyc_shared.a || compiler/cli/libmyc_cli.a compiler/commands/libmyc_commands.a compiler/common/libmyc_common.a compiler/config/libmyc_config.a compiler/diagnostics/libmyc_diagnostics.a compiler/driver/libmyc_driver.a compiler/source/libmyc_source.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  FLAGS = -g
+  LINK_LIBRARIES = compiler/driver/libmyc_driver.a  compiler/commands/libmyc_commands.a  compiler/cli/libmyc_cli.a  compiler/common/libmyc_common.a  compiler/config/libmyc_config.a  compiler/source/libmyc_source.a  compiler/diagnostics/libmyc_diagnostics.a  shared/src/libmyc_shared.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\myc.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = CMakeFiles\myc.dir\
   TARGET_FILE = bin\myc.exe
   TARGET_IMPLIB = libmyc.dll.a
-  TARGET_PDB = bin\myc.pdb
+  TARGET_PDB = myc.exe.dbg
   TARGET_SUPPORT_DIR = CMakeFiles\myc.dir
 
 
@@ -254,28 +251,24 @@ build shared/install/strip: phony shared/CMakeFiles/install/strip.util
 
 build cmake_object_order_depends_target_myc_shared: phony || .
 
-build shared/src/CMakeFiles/myc_shared.dir/logging/logger.cpp.obj: CXX_COMPILER__myc_shared_unscanned_Release C$:/AeonX/shared/src/logging/logger.cpp || cmake_object_order_depends_target_myc_shared
-  CONFIG = Release
-  DEFINES = -DMYC_BUILD_DATE="\"2026-07-12 08:42:10\""
+build shared/src/CMakeFiles/myc_shared.dir/logging/logger.cpp.obj: CXX_COMPILER__myc_shared_unscanned_Debug C$:/AeonX/shared/src/logging/logger.cpp || cmake_object_order_depends_target_myc_shared
+  CONFIG = Debug
+  DEFINES = -DMYC_BUILD_DATE="\"2026-07-12 09:17:57\""
   DEP_FILE = shared\src\CMakeFiles\myc_shared.dir\logging\logger.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/shared/src/../include
   OBJECT_DIR = shared\src\CMakeFiles\myc_shared.dir
   OBJECT_FILE_DIR = shared\src\CMakeFiles\myc_shared.dir\logging
-  TARGET_COMPILE_PDB = shared\src\CMakeFiles\myc_shared.dir\myc_shared.pdb
-  TARGET_PDB = shared\src\libmyc_shared.pdb
   TARGET_SUPPORT_DIR = shared\src\CMakeFiles\myc_shared.dir
 
-build shared/src/CMakeFiles/myc_shared.dir/version/version_info.cpp.obj: CXX_COMPILER__myc_shared_unscanned_Release C$:/AeonX/shared/src/version/version_info.cpp || cmake_object_order_depends_target_myc_shared
-  CONFIG = Release
-  DEFINES = -DMYC_BUILD_DATE="\"2026-07-12 08:42:10\""
+build shared/src/CMakeFiles/myc_shared.dir/version/version_info.cpp.obj: CXX_COMPILER__myc_shared_unscanned_Debug C$:/AeonX/shared/src/version/version_info.cpp || cmake_object_order_depends_target_myc_shared
+  CONFIG = Debug
+  DEFINES = -DMYC_BUILD_DATE="\"2026-07-12 09:17:57\""
   DEP_FILE = shared\src\CMakeFiles\myc_shared.dir\version\version_info.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/shared/src/../include
   OBJECT_DIR = shared\src\CMakeFiles\myc_shared.dir
   OBJECT_FILE_DIR = shared\src\CMakeFiles\myc_shared.dir\version
-  TARGET_COMPILE_PDB = shared\src\CMakeFiles\myc_shared.dir\myc_shared.pdb
-  TARGET_PDB = shared\src\libmyc_shared.pdb
   TARGET_SUPPORT_DIR = shared\src\CMakeFiles\myc_shared.dir
 
 
@@ -286,15 +279,14 @@ build shared/src/CMakeFiles/myc_shared.dir/version/version_info.cpp.obj: CXX_COM
 #############################################
 # Link the static library shared\src\libmyc_shared.a
 
-build shared/src/libmyc_shared.a: CXX_STATIC_LIBRARY_LINKER__myc_shared_Release shared/src/CMakeFiles/myc_shared.dir/logging/logger.cpp.obj shared/src/CMakeFiles/myc_shared.dir/version/version_info.cpp.obj
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build shared/src/libmyc_shared.a: CXX_STATIC_LIBRARY_LINKER__myc_shared_Debug shared/src/CMakeFiles/myc_shared.dir/logging/logger.cpp.obj shared/src/CMakeFiles/myc_shared.dir/version/version_info.cpp.obj
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = shared\src\CMakeFiles\myc_shared.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = shared\src\CMakeFiles\myc_shared.dir\myc_shared.pdb
   TARGET_FILE = shared\src\libmyc_shared.a
-  TARGET_PDB = shared\src\libmyc_shared.pdb
+  TARGET_PDB = myc_shared.a.dbg
   TARGET_SUPPORT_DIR = shared\src\CMakeFiles\myc_shared.dir
 
 
@@ -470,15 +462,13 @@ build compiler/install/strip: phony compiler/CMakeFiles/install/strip.util
 
 build cmake_object_order_depends_target_myc_config: phony || cmake_object_order_depends_target_myc_shared
 
-build compiler/config/CMakeFiles/myc_config.dir/src/compiler_config.cpp.obj: CXX_COMPILER__myc_config_unscanned_Release C$:/AeonX/compiler/config/src/compiler_config.cpp || cmake_object_order_depends_target_myc_config
-  CONFIG = Release
+build compiler/config/CMakeFiles/myc_config.dir/src/compiler_config.cpp.obj: CXX_COMPILER__myc_config_unscanned_Debug C$:/AeonX/compiler/config/src/compiler_config.cpp || cmake_object_order_depends_target_myc_config
+  CONFIG = Debug
   DEP_FILE = compiler\config\CMakeFiles\myc_config.dir\src\compiler_config.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include
   OBJECT_DIR = compiler\config\CMakeFiles\myc_config.dir
   OBJECT_FILE_DIR = compiler\config\CMakeFiles\myc_config.dir\src
-  TARGET_COMPILE_PDB = compiler\config\CMakeFiles\myc_config.dir\myc_config.pdb
-  TARGET_PDB = compiler\config\libmyc_config.pdb
   TARGET_SUPPORT_DIR = compiler\config\CMakeFiles\myc_config.dir
 
 
@@ -489,15 +479,14 @@ build compiler/config/CMakeFiles/myc_config.dir/src/compiler_config.cpp.obj: CXX
 #############################################
 # Link the static library compiler\config\libmyc_config.a
 
-build compiler/config/libmyc_config.a: CXX_STATIC_LIBRARY_LINKER__myc_config_Release compiler/config/CMakeFiles/myc_config.dir/src/compiler_config.cpp.obj || shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build compiler/config/libmyc_config.a: CXX_STATIC_LIBRARY_LINKER__myc_config_Debug compiler/config/CMakeFiles/myc_config.dir/src/compiler_config.cpp.obj || shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\config\CMakeFiles\myc_config.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = compiler\config\CMakeFiles\myc_config.dir\myc_config.pdb
   TARGET_FILE = compiler\config\libmyc_config.a
-  TARGET_PDB = compiler\config\libmyc_config.pdb
+  TARGET_PDB = myc_config.a.dbg
   TARGET_SUPPORT_DIR = compiler\config\CMakeFiles\myc_config.dir
 
 
@@ -591,26 +580,22 @@ build compiler/config/install/strip: phony compiler/config/CMakeFiles/install/st
 
 build cmake_object_order_depends_target_myc_diagnostics: phony || cmake_object_order_depends_target_myc_shared
 
-build compiler/diagnostics/CMakeFiles/myc_diagnostics.dir/src/diagnostic.cpp.obj: CXX_COMPILER__myc_diagnostics_unscanned_Release C$:/AeonX/compiler/diagnostics/src/diagnostic.cpp || cmake_object_order_depends_target_myc_diagnostics
-  CONFIG = Release
+build compiler/diagnostics/CMakeFiles/myc_diagnostics.dir/src/diagnostic.cpp.obj: CXX_COMPILER__myc_diagnostics_unscanned_Debug C$:/AeonX/compiler/diagnostics/src/diagnostic.cpp || cmake_object_order_depends_target_myc_diagnostics
+  CONFIG = Debug
   DEP_FILE = compiler\diagnostics\CMakeFiles\myc_diagnostics.dir\src\diagnostic.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/shared/src/../include
   OBJECT_DIR = compiler\diagnostics\CMakeFiles\myc_diagnostics.dir
   OBJECT_FILE_DIR = compiler\diagnostics\CMakeFiles\myc_diagnostics.dir\src
-  TARGET_COMPILE_PDB = compiler\diagnostics\CMakeFiles\myc_diagnostics.dir\myc_diagnostics.pdb
-  TARGET_PDB = compiler\diagnostics\libmyc_diagnostics.pdb
   TARGET_SUPPORT_DIR = compiler\diagnostics\CMakeFiles\myc_diagnostics.dir
 
-build compiler/diagnostics/CMakeFiles/myc_diagnostics.dir/src/diagnostic_engine.cpp.obj: CXX_COMPILER__myc_diagnostics_unscanned_Release C$:/AeonX/compiler/diagnostics/src/diagnostic_engine.cpp || cmake_object_order_depends_target_myc_diagnostics
-  CONFIG = Release
+build compiler/diagnostics/CMakeFiles/myc_diagnostics.dir/src/diagnostic_engine.cpp.obj: CXX_COMPILER__myc_diagnostics_unscanned_Debug C$:/AeonX/compiler/diagnostics/src/diagnostic_engine.cpp || cmake_object_order_depends_target_myc_diagnostics
+  CONFIG = Debug
   DEP_FILE = compiler\diagnostics\CMakeFiles\myc_diagnostics.dir\src\diagnostic_engine.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/shared/src/../include
   OBJECT_DIR = compiler\diagnostics\CMakeFiles\myc_diagnostics.dir
   OBJECT_FILE_DIR = compiler\diagnostics\CMakeFiles\myc_diagnostics.dir\src
-  TARGET_COMPILE_PDB = compiler\diagnostics\CMakeFiles\myc_diagnostics.dir\myc_diagnostics.pdb
-  TARGET_PDB = compiler\diagnostics\libmyc_diagnostics.pdb
   TARGET_SUPPORT_DIR = compiler\diagnostics\CMakeFiles\myc_diagnostics.dir
 
 
@@ -621,15 +606,14 @@ build compiler/diagnostics/CMakeFiles/myc_diagnostics.dir/src/diagnostic_engine.
 #############################################
 # Link the static library compiler\diagnostics\libmyc_diagnostics.a
 
-build compiler/diagnostics/libmyc_diagnostics.a: CXX_STATIC_LIBRARY_LINKER__myc_diagnostics_Release compiler/diagnostics/CMakeFiles/myc_diagnostics.dir/src/diagnostic.cpp.obj compiler/diagnostics/CMakeFiles/myc_diagnostics.dir/src/diagnostic_engine.cpp.obj || shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build compiler/diagnostics/libmyc_diagnostics.a: CXX_STATIC_LIBRARY_LINKER__myc_diagnostics_Debug compiler/diagnostics/CMakeFiles/myc_diagnostics.dir/src/diagnostic.cpp.obj compiler/diagnostics/CMakeFiles/myc_diagnostics.dir/src/diagnostic_engine.cpp.obj || shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\diagnostics\CMakeFiles\myc_diagnostics.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = compiler\diagnostics\CMakeFiles\myc_diagnostics.dir\myc_diagnostics.pdb
   TARGET_FILE = compiler\diagnostics\libmyc_diagnostics.a
-  TARGET_PDB = compiler\diagnostics\libmyc_diagnostics.pdb
+  TARGET_PDB = myc_diagnostics.a.dbg
   TARGET_SUPPORT_DIR = compiler\diagnostics\CMakeFiles\myc_diagnostics.dir
 
 
@@ -714,6 +698,478 @@ build compiler/diagnostics/install/strip: phony compiler/diagnostics/CMakeFiles/
 # C:/AeonX/compiler/CMakeLists.txt
 # =============================================================================
 
+
+#############################################
+# Utility command for test
+
+build compiler/exitcodes/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\exitcodes && C:\msys64\mingw64\bin\ctest.exe "
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build compiler/exitcodes/test: phony compiler/exitcodes/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build compiler/exitcodes/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\exitcodes && C:\msys64\mingw64\bin\cmake.exe -E echo "No interactive CMake dialog available.""
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build compiler/exitcodes/edit_cache: phony compiler/exitcodes/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build compiler/exitcodes/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\exitcodes && C:\msys64\mingw64\bin\cmake.exe --regenerate-during-build -SC:\AeonX -BC:\AeonX\build-release"
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build compiler/exitcodes/rebuild_cache: phony compiler/exitcodes/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for list_install_components
+
+build compiler/exitcodes/list_install_components: phony
+
+
+#############################################
+# Utility command for install
+
+build compiler/exitcodes/CMakeFiles/install.util: CUSTOM_COMMAND compiler/exitcodes/all
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\exitcodes && C:\msys64\mingw64\bin\cmake.exe -P cmake_install.cmake"
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build compiler/exitcodes/install: phony compiler/exitcodes/CMakeFiles/install.util
+
+
+#############################################
+# Utility command for install/local
+
+build compiler/exitcodes/CMakeFiles/install/local.util: CUSTOM_COMMAND compiler/exitcodes/all
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\exitcodes && C:\msys64\mingw64\bin\cmake.exe -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake"
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build compiler/exitcodes/install/local: phony compiler/exitcodes/CMakeFiles/install/local.util
+
+
+#############################################
+# Utility command for install/strip
+
+build compiler/exitcodes/CMakeFiles/install/strip.util: CUSTOM_COMMAND compiler/exitcodes/all
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\exitcodes && C:\msys64\mingw64\bin\cmake.exe -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake"
+  DESC = Installing the project stripped...
+  pool = console
+  restat = 1
+
+build compiler/exitcodes/install/strip: phony compiler/exitcodes/CMakeFiles/install/strip.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# C:/AeonX/compiler/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target myc_common
+
+
+#############################################
+# Order-only phony target for myc_common
+
+build cmake_object_order_depends_target_myc_common: phony || cmake_object_order_depends_target_myc_config cmake_object_order_depends_target_myc_shared
+
+build compiler/common/CMakeFiles/myc_common.dir/src/cli_output.cpp.obj: CXX_COMPILER__myc_common_unscanned_Debug C$:/AeonX/compiler/common/src/cli_output.cpp || cmake_object_order_depends_target_myc_common
+  CONFIG = Debug
+  DEP_FILE = compiler\common\CMakeFiles\myc_common.dir\src\cli_output.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include
+  OBJECT_DIR = compiler\common\CMakeFiles\myc_common.dir
+  OBJECT_FILE_DIR = compiler\common\CMakeFiles\myc_common.dir\src
+  TARGET_SUPPORT_DIR = compiler\common\CMakeFiles\myc_common.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target myc_common
+
+
+#############################################
+# Link the static library compiler\common\libmyc_common.a
+
+build compiler/common/libmyc_common.a: CXX_STATIC_LIBRARY_LINKER__myc_common_Debug compiler/common/CMakeFiles/myc_common.dir/src/cli_output.cpp.obj || compiler/config/libmyc_config.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = compiler\common\CMakeFiles\myc_common.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = compiler\common\libmyc_common.a
+  TARGET_PDB = myc_common.a.dbg
+  TARGET_SUPPORT_DIR = compiler\common\CMakeFiles\myc_common.dir
+
+
+#############################################
+# Utility command for test
+
+build compiler/common/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\common && C:\msys64\mingw64\bin\ctest.exe "
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build compiler/common/test: phony compiler/common/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build compiler/common/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\common && C:\msys64\mingw64\bin\cmake.exe -E echo "No interactive CMake dialog available.""
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build compiler/common/edit_cache: phony compiler/common/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build compiler/common/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\common && C:\msys64\mingw64\bin\cmake.exe --regenerate-during-build -SC:\AeonX -BC:\AeonX\build-release"
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build compiler/common/rebuild_cache: phony compiler/common/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for list_install_components
+
+build compiler/common/list_install_components: phony
+
+
+#############################################
+# Utility command for install
+
+build compiler/common/CMakeFiles/install.util: CUSTOM_COMMAND compiler/common/all
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\common && C:\msys64\mingw64\bin\cmake.exe -P cmake_install.cmake"
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build compiler/common/install: phony compiler/common/CMakeFiles/install.util
+
+
+#############################################
+# Utility command for install/local
+
+build compiler/common/CMakeFiles/install/local.util: CUSTOM_COMMAND compiler/common/all
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\common && C:\msys64\mingw64\bin\cmake.exe -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake"
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build compiler/common/install/local: phony compiler/common/CMakeFiles/install/local.util
+
+
+#############################################
+# Utility command for install/strip
+
+build compiler/common/CMakeFiles/install/strip.util: CUSTOM_COMMAND compiler/common/all
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\common && C:\msys64\mingw64\bin\cmake.exe -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake"
+  DESC = Installing the project stripped...
+  pool = console
+  restat = 1
+
+build compiler/common/install/strip: phony compiler/common/CMakeFiles/install/strip.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# C:/AeonX/compiler/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target myc_cli
+
+
+#############################################
+# Order-only phony target for myc_cli
+
+build cmake_object_order_depends_target_myc_cli: phony || cmake_object_order_depends_target_myc_common cmake_object_order_depends_target_myc_config cmake_object_order_depends_target_myc_shared
+
+build compiler/cli/CMakeFiles/myc_cli.dir/src/cli_parser.cpp.obj: CXX_COMPILER__myc_cli_unscanned_Debug C$:/AeonX/compiler/cli/src/cli_parser.cpp || cmake_object_order_depends_target_myc_cli
+  CONFIG = Debug
+  DEP_FILE = compiler\cli\CMakeFiles\myc_cli.dir\src\cli_parser.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include
+  OBJECT_DIR = compiler\cli\CMakeFiles\myc_cli.dir
+  OBJECT_FILE_DIR = compiler\cli\CMakeFiles\myc_cli.dir\src
+  TARGET_SUPPORT_DIR = compiler\cli\CMakeFiles\myc_cli.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target myc_cli
+
+
+#############################################
+# Link the static library compiler\cli\libmyc_cli.a
+
+build compiler/cli/libmyc_cli.a: CXX_STATIC_LIBRARY_LINKER__myc_cli_Debug compiler/cli/CMakeFiles/myc_cli.dir/src/cli_parser.cpp.obj || compiler/common/libmyc_common.a compiler/config/libmyc_config.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = compiler\cli\CMakeFiles\myc_cli.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = compiler\cli\libmyc_cli.a
+  TARGET_PDB = myc_cli.a.dbg
+  TARGET_SUPPORT_DIR = compiler\cli\CMakeFiles\myc_cli.dir
+
+
+#############################################
+# Utility command for test
+
+build compiler/cli/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\cli && C:\msys64\mingw64\bin\ctest.exe "
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build compiler/cli/test: phony compiler/cli/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build compiler/cli/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\cli && C:\msys64\mingw64\bin\cmake.exe -E echo "No interactive CMake dialog available.""
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build compiler/cli/edit_cache: phony compiler/cli/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build compiler/cli/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\cli && C:\msys64\mingw64\bin\cmake.exe --regenerate-during-build -SC:\AeonX -BC:\AeonX\build-release"
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build compiler/cli/rebuild_cache: phony compiler/cli/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for list_install_components
+
+build compiler/cli/list_install_components: phony
+
+
+#############################################
+# Utility command for install
+
+build compiler/cli/CMakeFiles/install.util: CUSTOM_COMMAND compiler/cli/all
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\cli && C:\msys64\mingw64\bin\cmake.exe -P cmake_install.cmake"
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build compiler/cli/install: phony compiler/cli/CMakeFiles/install.util
+
+
+#############################################
+# Utility command for install/local
+
+build compiler/cli/CMakeFiles/install/local.util: CUSTOM_COMMAND compiler/cli/all
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\cli && C:\msys64\mingw64\bin\cmake.exe -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake"
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build compiler/cli/install/local: phony compiler/cli/CMakeFiles/install/local.util
+
+
+#############################################
+# Utility command for install/strip
+
+build compiler/cli/CMakeFiles/install/strip.util: CUSTOM_COMMAND compiler/cli/all
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\cli && C:\msys64\mingw64\bin\cmake.exe -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake"
+  DESC = Installing the project stripped...
+  pool = console
+  restat = 1
+
+build compiler/cli/install/strip: phony compiler/cli/CMakeFiles/install/strip.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# C:/AeonX/compiler/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target myc_commands
+
+
+#############################################
+# Order-only phony target for myc_commands
+
+build cmake_object_order_depends_target_myc_commands: phony || cmake_object_order_depends_target_myc_cli cmake_object_order_depends_target_myc_common cmake_object_order_depends_target_myc_config cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_source
+
+build compiler/commands/CMakeFiles/myc_commands.dir/src/builtin_commands.cpp.obj: CXX_COMPILER__myc_commands_unscanned_Debug C$:/AeonX/compiler/commands/src/builtin_commands.cpp || cmake_object_order_depends_target_myc_commands
+  CONFIG = Debug
+  DEP_FILE = compiler\commands\CMakeFiles\myc_commands.dir\src\builtin_commands.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  OBJECT_DIR = compiler\commands\CMakeFiles\myc_commands.dir
+  OBJECT_FILE_DIR = compiler\commands\CMakeFiles\myc_commands.dir\src
+  TARGET_SUPPORT_DIR = compiler\commands\CMakeFiles\myc_commands.dir
+
+build compiler/commands/CMakeFiles/myc_commands.dir/src/command_registry.cpp.obj: CXX_COMPILER__myc_commands_unscanned_Debug C$:/AeonX/compiler/commands/src/command_registry.cpp || cmake_object_order_depends_target_myc_commands
+  CONFIG = Debug
+  DEP_FILE = compiler\commands\CMakeFiles\myc_commands.dir\src\command_registry.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  OBJECT_DIR = compiler\commands\CMakeFiles\myc_commands.dir
+  OBJECT_FILE_DIR = compiler\commands\CMakeFiles\myc_commands.dir\src
+  TARGET_SUPPORT_DIR = compiler\commands\CMakeFiles\myc_commands.dir
+
+build compiler/commands/CMakeFiles/myc_commands.dir/src/help_command.cpp.obj: CXX_COMPILER__myc_commands_unscanned_Debug C$:/AeonX/compiler/commands/src/help_command.cpp || cmake_object_order_depends_target_myc_commands
+  CONFIG = Debug
+  DEP_FILE = compiler\commands\CMakeFiles\myc_commands.dir\src\help_command.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  OBJECT_DIR = compiler\commands\CMakeFiles\myc_commands.dir
+  OBJECT_FILE_DIR = compiler\commands\CMakeFiles\myc_commands.dir\src
+  TARGET_SUPPORT_DIR = compiler\commands\CMakeFiles\myc_commands.dir
+
+build compiler/commands/CMakeFiles/myc_commands.dir/src/placeholder_command.cpp.obj: CXX_COMPILER__myc_commands_unscanned_Debug C$:/AeonX/compiler/commands/src/placeholder_command.cpp || cmake_object_order_depends_target_myc_commands
+  CONFIG = Debug
+  DEP_FILE = compiler\commands\CMakeFiles\myc_commands.dir\src\placeholder_command.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  OBJECT_DIR = compiler\commands\CMakeFiles\myc_commands.dir
+  OBJECT_FILE_DIR = compiler\commands\CMakeFiles\myc_commands.dir\src
+  TARGET_SUPPORT_DIR = compiler\commands\CMakeFiles\myc_commands.dir
+
+build compiler/commands/CMakeFiles/myc_commands.dir/src/version_command.cpp.obj: CXX_COMPILER__myc_commands_unscanned_Debug C$:/AeonX/compiler/commands/src/version_command.cpp || cmake_object_order_depends_target_myc_commands
+  CONFIG = Debug
+  DEP_FILE = compiler\commands\CMakeFiles\myc_commands.dir\src\version_command.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  OBJECT_DIR = compiler\commands\CMakeFiles\myc_commands.dir
+  OBJECT_FILE_DIR = compiler\commands\CMakeFiles\myc_commands.dir\src
+  TARGET_SUPPORT_DIR = compiler\commands\CMakeFiles\myc_commands.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target myc_commands
+
+
+#############################################
+# Link the static library compiler\commands\libmyc_commands.a
+
+build compiler/commands/libmyc_commands.a: CXX_STATIC_LIBRARY_LINKER__myc_commands_Debug compiler/commands/CMakeFiles/myc_commands.dir/src/builtin_commands.cpp.obj compiler/commands/CMakeFiles/myc_commands.dir/src/command_registry.cpp.obj compiler/commands/CMakeFiles/myc_commands.dir/src/help_command.cpp.obj compiler/commands/CMakeFiles/myc_commands.dir/src/placeholder_command.cpp.obj compiler/commands/CMakeFiles/myc_commands.dir/src/version_command.cpp.obj || compiler/cli/libmyc_cli.a compiler/common/libmyc_common.a compiler/config/libmyc_config.a compiler/diagnostics/libmyc_diagnostics.a compiler/source/libmyc_source.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = compiler\commands\CMakeFiles\myc_commands.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = compiler\commands\libmyc_commands.a
+  TARGET_PDB = myc_commands.a.dbg
+  TARGET_SUPPORT_DIR = compiler\commands\CMakeFiles\myc_commands.dir
+
+
+#############################################
+# Utility command for test
+
+build compiler/commands/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\commands && C:\msys64\mingw64\bin\ctest.exe "
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build compiler/commands/test: phony compiler/commands/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build compiler/commands/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\commands && C:\msys64\mingw64\bin\cmake.exe -E echo "No interactive CMake dialog available.""
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build compiler/commands/edit_cache: phony compiler/commands/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build compiler/commands/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\commands && C:\msys64\mingw64\bin\cmake.exe --regenerate-during-build -SC:\AeonX -BC:\AeonX\build-release"
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build compiler/commands/rebuild_cache: phony compiler/commands/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for list_install_components
+
+build compiler/commands/list_install_components: phony
+
+
+#############################################
+# Utility command for install
+
+build compiler/commands/CMakeFiles/install.util: CUSTOM_COMMAND compiler/commands/all
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\commands && C:\msys64\mingw64\bin\cmake.exe -P cmake_install.cmake"
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build compiler/commands/install: phony compiler/commands/CMakeFiles/install.util
+
+
+#############################################
+# Utility command for install/local
+
+build compiler/commands/CMakeFiles/install/local.util: CUSTOM_COMMAND compiler/commands/all
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\commands && C:\msys64\mingw64\bin\cmake.exe -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake"
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build compiler/commands/install/local: phony compiler/commands/CMakeFiles/install/local.util
+
+
+#############################################
+# Utility command for install/strip
+
+build compiler/commands/CMakeFiles/install/strip.util: CUSTOM_COMMAND compiler/commands/all
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\AeonX\build-release\compiler\commands && C:\msys64\mingw64\bin\cmake.exe -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake"
+  DESC = Installing the project stripped...
+  pool = console
+  restat = 1
+
+build compiler/commands/install/strip: phony compiler/commands/CMakeFiles/install/strip.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# C:/AeonX/compiler/CMakeLists.txt
+# =============================================================================
+
 # =============================================================================
 # Object build statements for STATIC_LIBRARY target myc_source
 
@@ -723,26 +1179,22 @@ build compiler/diagnostics/install/strip: phony compiler/diagnostics/CMakeFiles/
 
 build cmake_object_order_depends_target_myc_source: phony || cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_shared
 
-build compiler/source/CMakeFiles/myc_source.dir/src/source_buffer.cpp.obj: CXX_COMPILER__myc_source_unscanned_Release C$:/AeonX/compiler/source/src/source_buffer.cpp || cmake_object_order_depends_target_myc_source
-  CONFIG = Release
+build compiler/source/CMakeFiles/myc_source.dir/src/source_buffer.cpp.obj: CXX_COMPILER__myc_source_unscanned_Debug C$:/AeonX/compiler/source/src/source_buffer.cpp || cmake_object_order_depends_target_myc_source
+  CONFIG = Debug
   DEP_FILE = compiler\source\CMakeFiles\myc_source.dir\src\source_buffer.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/source/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include
   OBJECT_DIR = compiler\source\CMakeFiles\myc_source.dir
   OBJECT_FILE_DIR = compiler\source\CMakeFiles\myc_source.dir\src
-  TARGET_COMPILE_PDB = compiler\source\CMakeFiles\myc_source.dir\myc_source.pdb
-  TARGET_PDB = compiler\source\libmyc_source.pdb
   TARGET_SUPPORT_DIR = compiler\source\CMakeFiles\myc_source.dir
 
-build compiler/source/CMakeFiles/myc_source.dir/src/source_manager.cpp.obj: CXX_COMPILER__myc_source_unscanned_Release C$:/AeonX/compiler/source/src/source_manager.cpp || cmake_object_order_depends_target_myc_source
-  CONFIG = Release
+build compiler/source/CMakeFiles/myc_source.dir/src/source_manager.cpp.obj: CXX_COMPILER__myc_source_unscanned_Debug C$:/AeonX/compiler/source/src/source_manager.cpp || cmake_object_order_depends_target_myc_source
+  CONFIG = Debug
   DEP_FILE = compiler\source\CMakeFiles\myc_source.dir\src\source_manager.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/source/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include
   OBJECT_DIR = compiler\source\CMakeFiles\myc_source.dir
   OBJECT_FILE_DIR = compiler\source\CMakeFiles\myc_source.dir\src
-  TARGET_COMPILE_PDB = compiler\source\CMakeFiles\myc_source.dir\myc_source.pdb
-  TARGET_PDB = compiler\source\libmyc_source.pdb
   TARGET_SUPPORT_DIR = compiler\source\CMakeFiles\myc_source.dir
 
 
@@ -753,15 +1205,14 @@ build compiler/source/CMakeFiles/myc_source.dir/src/source_manager.cpp.obj: CXX_
 #############################################
 # Link the static library compiler\source\libmyc_source.a
 
-build compiler/source/libmyc_source.a: CXX_STATIC_LIBRARY_LINKER__myc_source_Release compiler/source/CMakeFiles/myc_source.dir/src/source_buffer.cpp.obj compiler/source/CMakeFiles/myc_source.dir/src/source_manager.cpp.obj || compiler/diagnostics/libmyc_diagnostics.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build compiler/source/libmyc_source.a: CXX_STATIC_LIBRARY_LINKER__myc_source_Debug compiler/source/CMakeFiles/myc_source.dir/src/source_buffer.cpp.obj compiler/source/CMakeFiles/myc_source.dir/src/source_manager.cpp.obj || compiler/diagnostics/libmyc_diagnostics.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\source\CMakeFiles\myc_source.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = compiler\source\CMakeFiles\myc_source.dir\myc_source.pdb
   TARGET_FILE = compiler\source\libmyc_source.a
-  TARGET_PDB = compiler\source\libmyc_source.pdb
+  TARGET_PDB = myc_source.a.dbg
   TARGET_SUPPORT_DIR = compiler\source\CMakeFiles\myc_source.dir
 
 
@@ -855,15 +1306,13 @@ build compiler/source/install/strip: phony compiler/source/CMakeFiles/install/st
 
 build cmake_object_order_depends_target_myc_lexer: phony || cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_source
 
-build compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_module.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Release C$:/AeonX/compiler/lexer/src/lexer_module.cpp || cmake_object_order_depends_target_myc_lexer
-  CONFIG = Release
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_module.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/lexer_module.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
   DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\lexer_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include
   OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
   OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
-  TARGET_COMPILE_PDB = compiler\lexer\CMakeFiles\myc_lexer.dir\myc_lexer.pdb
-  TARGET_PDB = compiler\lexer\libmyc_lexer.pdb
   TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
 
 
@@ -874,15 +1323,14 @@ build compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_module.cpp.obj: CXX_COMP
 #############################################
 # Link the static library compiler\lexer\libmyc_lexer.a
 
-build compiler/lexer/libmyc_lexer.a: CXX_STATIC_LIBRARY_LINKER__myc_lexer_Release compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_module.cpp.obj || compiler/diagnostics/libmyc_diagnostics.a compiler/source/libmyc_source.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build compiler/lexer/libmyc_lexer.a: CXX_STATIC_LIBRARY_LINKER__myc_lexer_Debug compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_module.cpp.obj || compiler/diagnostics/libmyc_diagnostics.a compiler/source/libmyc_source.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = compiler\lexer\CMakeFiles\myc_lexer.dir\myc_lexer.pdb
   TARGET_FILE = compiler\lexer\libmyc_lexer.a
-  TARGET_PDB = compiler\lexer\libmyc_lexer.pdb
+  TARGET_PDB = myc_lexer.a.dbg
   TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
 
 
@@ -976,15 +1424,13 @@ build compiler/lexer/install/strip: phony compiler/lexer/CMakeFiles/install/stri
 
 build cmake_object_order_depends_target_myc_parser: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_lexer cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_source
 
-build compiler/parser/CMakeFiles/myc_parser.dir/src/parser_module.cpp.obj: CXX_COMPILER__myc_parser_unscanned_Release C$:/AeonX/compiler/parser/src/parser_module.cpp || cmake_object_order_depends_target_myc_parser
-  CONFIG = Release
+build compiler/parser/CMakeFiles/myc_parser.dir/src/parser_module.cpp.obj: CXX_COMPILER__myc_parser_unscanned_Debug C$:/AeonX/compiler/parser/src/parser_module.cpp || cmake_object_order_depends_target_myc_parser
+  CONFIG = Debug
   DEP_FILE = compiler\parser\CMakeFiles\myc_parser.dir\src\parser_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/parser/include -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/ast/include
   OBJECT_DIR = compiler\parser\CMakeFiles\myc_parser.dir
   OBJECT_FILE_DIR = compiler\parser\CMakeFiles\myc_parser.dir\src
-  TARGET_COMPILE_PDB = compiler\parser\CMakeFiles\myc_parser.dir\myc_parser.pdb
-  TARGET_PDB = compiler\parser\libmyc_parser.pdb
   TARGET_SUPPORT_DIR = compiler\parser\CMakeFiles\myc_parser.dir
 
 
@@ -995,15 +1441,14 @@ build compiler/parser/CMakeFiles/myc_parser.dir/src/parser_module.cpp.obj: CXX_C
 #############################################
 # Link the static library compiler\parser\libmyc_parser.a
 
-build compiler/parser/libmyc_parser.a: CXX_STATIC_LIBRARY_LINKER__myc_parser_Release compiler/parser/CMakeFiles/myc_parser.dir/src/parser_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/lexer/libmyc_lexer.a compiler/source/libmyc_source.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build compiler/parser/libmyc_parser.a: CXX_STATIC_LIBRARY_LINKER__myc_parser_Debug compiler/parser/CMakeFiles/myc_parser.dir/src/parser_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/lexer/libmyc_lexer.a compiler/source/libmyc_source.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\parser\CMakeFiles\myc_parser.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = compiler\parser\CMakeFiles\myc_parser.dir\myc_parser.pdb
   TARGET_FILE = compiler\parser\libmyc_parser.a
-  TARGET_PDB = compiler\parser\libmyc_parser.pdb
+  TARGET_PDB = myc_parser.a.dbg
   TARGET_SUPPORT_DIR = compiler\parser\CMakeFiles\myc_parser.dir
 
 
@@ -1097,15 +1542,13 @@ build compiler/parser/install/strip: phony compiler/parser/CMakeFiles/install/st
 
 build cmake_object_order_depends_target_myc_ast: phony || cmake_object_order_depends_target_myc_shared
 
-build compiler/ast/CMakeFiles/myc_ast.dir/src/ast_module.cpp.obj: CXX_COMPILER__myc_ast_unscanned_Release C$:/AeonX/compiler/ast/src/ast_module.cpp || cmake_object_order_depends_target_myc_ast
-  CONFIG = Release
+build compiler/ast/CMakeFiles/myc_ast.dir/src/ast_module.cpp.obj: CXX_COMPILER__myc_ast_unscanned_Debug C$:/AeonX/compiler/ast/src/ast_module.cpp || cmake_object_order_depends_target_myc_ast
+  CONFIG = Debug
   DEP_FILE = compiler\ast\CMakeFiles\myc_ast.dir\src\ast_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/ast/include -IC:/AeonX/shared/src/../include
   OBJECT_DIR = compiler\ast\CMakeFiles\myc_ast.dir
   OBJECT_FILE_DIR = compiler\ast\CMakeFiles\myc_ast.dir\src
-  TARGET_COMPILE_PDB = compiler\ast\CMakeFiles\myc_ast.dir\myc_ast.pdb
-  TARGET_PDB = compiler\ast\libmyc_ast.pdb
   TARGET_SUPPORT_DIR = compiler\ast\CMakeFiles\myc_ast.dir
 
 
@@ -1116,15 +1559,14 @@ build compiler/ast/CMakeFiles/myc_ast.dir/src/ast_module.cpp.obj: CXX_COMPILER__
 #############################################
 # Link the static library compiler\ast\libmyc_ast.a
 
-build compiler/ast/libmyc_ast.a: CXX_STATIC_LIBRARY_LINKER__myc_ast_Release compiler/ast/CMakeFiles/myc_ast.dir/src/ast_module.cpp.obj || shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build compiler/ast/libmyc_ast.a: CXX_STATIC_LIBRARY_LINKER__myc_ast_Debug compiler/ast/CMakeFiles/myc_ast.dir/src/ast_module.cpp.obj || shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\ast\CMakeFiles\myc_ast.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = compiler\ast\CMakeFiles\myc_ast.dir\myc_ast.pdb
   TARGET_FILE = compiler\ast\libmyc_ast.a
-  TARGET_PDB = compiler\ast\libmyc_ast.pdb
+  TARGET_PDB = myc_ast.a.dbg
   TARGET_SUPPORT_DIR = compiler\ast\CMakeFiles\myc_ast.dir
 
 
@@ -1218,15 +1660,13 @@ build compiler/ast/install/strip: phony compiler/ast/CMakeFiles/install/strip.ut
 
 build cmake_object_order_depends_target_myc_semantic: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_shared
 
-build compiler/semantic/CMakeFiles/myc_semantic.dir/src/semantic_module.cpp.obj: CXX_COMPILER__myc_semantic_unscanned_Release C$:/AeonX/compiler/semantic/src/semantic_module.cpp || cmake_object_order_depends_target_myc_semantic
-  CONFIG = Release
+build compiler/semantic/CMakeFiles/myc_semantic.dir/src/semantic_module.cpp.obj: CXX_COMPILER__myc_semantic_unscanned_Debug C$:/AeonX/compiler/semantic/src/semantic_module.cpp || cmake_object_order_depends_target_myc_semantic
+  CONFIG = Debug
   DEP_FILE = compiler\semantic\CMakeFiles\myc_semantic.dir\src\semantic_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/semantic/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include
   OBJECT_DIR = compiler\semantic\CMakeFiles\myc_semantic.dir
   OBJECT_FILE_DIR = compiler\semantic\CMakeFiles\myc_semantic.dir\src
-  TARGET_COMPILE_PDB = compiler\semantic\CMakeFiles\myc_semantic.dir\myc_semantic.pdb
-  TARGET_PDB = compiler\semantic\libmyc_semantic.pdb
   TARGET_SUPPORT_DIR = compiler\semantic\CMakeFiles\myc_semantic.dir
 
 
@@ -1237,15 +1677,14 @@ build compiler/semantic/CMakeFiles/myc_semantic.dir/src/semantic_module.cpp.obj:
 #############################################
 # Link the static library compiler\semantic\libmyc_semantic.a
 
-build compiler/semantic/libmyc_semantic.a: CXX_STATIC_LIBRARY_LINKER__myc_semantic_Release compiler/semantic/CMakeFiles/myc_semantic.dir/src/semantic_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build compiler/semantic/libmyc_semantic.a: CXX_STATIC_LIBRARY_LINKER__myc_semantic_Debug compiler/semantic/CMakeFiles/myc_semantic.dir/src/semantic_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\semantic\CMakeFiles\myc_semantic.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = compiler\semantic\CMakeFiles\myc_semantic.dir\myc_semantic.pdb
   TARGET_FILE = compiler\semantic\libmyc_semantic.a
-  TARGET_PDB = compiler\semantic\libmyc_semantic.pdb
+  TARGET_PDB = myc_semantic.a.dbg
   TARGET_SUPPORT_DIR = compiler\semantic\CMakeFiles\myc_semantic.dir
 
 
@@ -1339,15 +1778,13 @@ build compiler/semantic/install/strip: phony compiler/semantic/CMakeFiles/instal
 
 build cmake_object_order_depends_target_myc_typechecker: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_semantic cmake_object_order_depends_target_myc_shared
 
-build compiler/typechecker/CMakeFiles/myc_typechecker.dir/src/typechecker_module.cpp.obj: CXX_COMPILER__myc_typechecker_unscanned_Release C$:/AeonX/compiler/typechecker/src/typechecker_module.cpp || cmake_object_order_depends_target_myc_typechecker
-  CONFIG = Release
+build compiler/typechecker/CMakeFiles/myc_typechecker.dir/src/typechecker_module.cpp.obj: CXX_COMPILER__myc_typechecker_unscanned_Debug C$:/AeonX/compiler/typechecker/src/typechecker_module.cpp || cmake_object_order_depends_target_myc_typechecker
+  CONFIG = Debug
   DEP_FILE = compiler\typechecker\CMakeFiles\myc_typechecker.dir\src\typechecker_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/typechecker/include -IC:/AeonX/compiler/semantic/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include
   OBJECT_DIR = compiler\typechecker\CMakeFiles\myc_typechecker.dir
   OBJECT_FILE_DIR = compiler\typechecker\CMakeFiles\myc_typechecker.dir\src
-  TARGET_COMPILE_PDB = compiler\typechecker\CMakeFiles\myc_typechecker.dir\myc_typechecker.pdb
-  TARGET_PDB = compiler\typechecker\libmyc_typechecker.pdb
   TARGET_SUPPORT_DIR = compiler\typechecker\CMakeFiles\myc_typechecker.dir
 
 
@@ -1358,15 +1795,14 @@ build compiler/typechecker/CMakeFiles/myc_typechecker.dir/src/typechecker_module
 #############################################
 # Link the static library compiler\typechecker\libmyc_typechecker.a
 
-build compiler/typechecker/libmyc_typechecker.a: CXX_STATIC_LIBRARY_LINKER__myc_typechecker_Release compiler/typechecker/CMakeFiles/myc_typechecker.dir/src/typechecker_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/semantic/libmyc_semantic.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build compiler/typechecker/libmyc_typechecker.a: CXX_STATIC_LIBRARY_LINKER__myc_typechecker_Debug compiler/typechecker/CMakeFiles/myc_typechecker.dir/src/typechecker_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/semantic/libmyc_semantic.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\typechecker\CMakeFiles\myc_typechecker.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = compiler\typechecker\CMakeFiles\myc_typechecker.dir\myc_typechecker.pdb
   TARGET_FILE = compiler\typechecker\libmyc_typechecker.a
-  TARGET_PDB = compiler\typechecker\libmyc_typechecker.pdb
+  TARGET_PDB = myc_typechecker.a.dbg
   TARGET_SUPPORT_DIR = compiler\typechecker\CMakeFiles\myc_typechecker.dir
 
 
@@ -1460,15 +1896,13 @@ build compiler/typechecker/install/strip: phony compiler/typechecker/CMakeFiles/
 
 build cmake_object_order_depends_target_myc_hir: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_semantic cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_typechecker
 
-build compiler/hir/CMakeFiles/myc_hir.dir/src/hir_module.cpp.obj: CXX_COMPILER__myc_hir_unscanned_Release C$:/AeonX/compiler/hir/src/hir_module.cpp || cmake_object_order_depends_target_myc_hir
-  CONFIG = Release
+build compiler/hir/CMakeFiles/myc_hir.dir/src/hir_module.cpp.obj: CXX_COMPILER__myc_hir_unscanned_Debug C$:/AeonX/compiler/hir/src/hir_module.cpp || cmake_object_order_depends_target_myc_hir
+  CONFIG = Debug
   DEP_FILE = compiler\hir\CMakeFiles\myc_hir.dir\src\hir_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/hir/include -IC:/AeonX/compiler/typechecker/include -IC:/AeonX/compiler/semantic/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include
   OBJECT_DIR = compiler\hir\CMakeFiles\myc_hir.dir
   OBJECT_FILE_DIR = compiler\hir\CMakeFiles\myc_hir.dir\src
-  TARGET_COMPILE_PDB = compiler\hir\CMakeFiles\myc_hir.dir\myc_hir.pdb
-  TARGET_PDB = compiler\hir\libmyc_hir.pdb
   TARGET_SUPPORT_DIR = compiler\hir\CMakeFiles\myc_hir.dir
 
 
@@ -1479,15 +1913,14 @@ build compiler/hir/CMakeFiles/myc_hir.dir/src/hir_module.cpp.obj: CXX_COMPILER__
 #############################################
 # Link the static library compiler\hir\libmyc_hir.a
 
-build compiler/hir/libmyc_hir.a: CXX_STATIC_LIBRARY_LINKER__myc_hir_Release compiler/hir/CMakeFiles/myc_hir.dir/src/hir_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build compiler/hir/libmyc_hir.a: CXX_STATIC_LIBRARY_LINKER__myc_hir_Debug compiler/hir/CMakeFiles/myc_hir.dir/src/hir_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\hir\CMakeFiles\myc_hir.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = compiler\hir\CMakeFiles\myc_hir.dir\myc_hir.pdb
   TARGET_FILE = compiler\hir\libmyc_hir.a
-  TARGET_PDB = compiler\hir\libmyc_hir.pdb
+  TARGET_PDB = myc_hir.a.dbg
   TARGET_SUPPORT_DIR = compiler\hir\CMakeFiles\myc_hir.dir
 
 
@@ -1581,15 +2014,13 @@ build compiler/hir/install/strip: phony compiler/hir/CMakeFiles/install/strip.ut
 
 build cmake_object_order_depends_target_myc_mir: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_hir cmake_object_order_depends_target_myc_semantic cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_typechecker
 
-build compiler/mir/CMakeFiles/myc_mir.dir/src/mir_module.cpp.obj: CXX_COMPILER__myc_mir_unscanned_Release C$:/AeonX/compiler/mir/src/mir_module.cpp || cmake_object_order_depends_target_myc_mir
-  CONFIG = Release
+build compiler/mir/CMakeFiles/myc_mir.dir/src/mir_module.cpp.obj: CXX_COMPILER__myc_mir_unscanned_Debug C$:/AeonX/compiler/mir/src/mir_module.cpp || cmake_object_order_depends_target_myc_mir
+  CONFIG = Debug
   DEP_FILE = compiler\mir\CMakeFiles\myc_mir.dir\src\mir_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/mir/include -IC:/AeonX/compiler/hir/include -IC:/AeonX/compiler/typechecker/include -IC:/AeonX/compiler/semantic/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include
   OBJECT_DIR = compiler\mir\CMakeFiles\myc_mir.dir
   OBJECT_FILE_DIR = compiler\mir\CMakeFiles\myc_mir.dir\src
-  TARGET_COMPILE_PDB = compiler\mir\CMakeFiles\myc_mir.dir\myc_mir.pdb
-  TARGET_PDB = compiler\mir\libmyc_mir.pdb
   TARGET_SUPPORT_DIR = compiler\mir\CMakeFiles\myc_mir.dir
 
 
@@ -1600,15 +2031,14 @@ build compiler/mir/CMakeFiles/myc_mir.dir/src/mir_module.cpp.obj: CXX_COMPILER__
 #############################################
 # Link the static library compiler\mir\libmyc_mir.a
 
-build compiler/mir/libmyc_mir.a: CXX_STATIC_LIBRARY_LINKER__myc_mir_Release compiler/mir/CMakeFiles/myc_mir.dir/src/mir_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/hir/libmyc_hir.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build compiler/mir/libmyc_mir.a: CXX_STATIC_LIBRARY_LINKER__myc_mir_Debug compiler/mir/CMakeFiles/myc_mir.dir/src/mir_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/hir/libmyc_hir.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\mir\CMakeFiles\myc_mir.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = compiler\mir\CMakeFiles\myc_mir.dir\myc_mir.pdb
   TARGET_FILE = compiler\mir\libmyc_mir.a
-  TARGET_PDB = compiler\mir\libmyc_mir.pdb
+  TARGET_PDB = myc_mir.a.dbg
   TARGET_SUPPORT_DIR = compiler\mir\CMakeFiles\myc_mir.dir
 
 
@@ -1702,15 +2132,13 @@ build compiler/mir/install/strip: phony compiler/mir/CMakeFiles/install/strip.ut
 
 build cmake_object_order_depends_target_myc_ir: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_hir cmake_object_order_depends_target_myc_mir cmake_object_order_depends_target_myc_semantic cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_typechecker
 
-build compiler/ir/CMakeFiles/myc_ir.dir/src/ir_module.cpp.obj: CXX_COMPILER__myc_ir_unscanned_Release C$:/AeonX/compiler/ir/src/ir_module.cpp || cmake_object_order_depends_target_myc_ir
-  CONFIG = Release
+build compiler/ir/CMakeFiles/myc_ir.dir/src/ir_module.cpp.obj: CXX_COMPILER__myc_ir_unscanned_Debug C$:/AeonX/compiler/ir/src/ir_module.cpp || cmake_object_order_depends_target_myc_ir
+  CONFIG = Debug
   DEP_FILE = compiler\ir\CMakeFiles\myc_ir.dir\src\ir_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/ir/include -IC:/AeonX/compiler/mir/include -IC:/AeonX/compiler/hir/include -IC:/AeonX/compiler/typechecker/include -IC:/AeonX/compiler/semantic/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include
   OBJECT_DIR = compiler\ir\CMakeFiles\myc_ir.dir
   OBJECT_FILE_DIR = compiler\ir\CMakeFiles\myc_ir.dir\src
-  TARGET_COMPILE_PDB = compiler\ir\CMakeFiles\myc_ir.dir\myc_ir.pdb
-  TARGET_PDB = compiler\ir\libmyc_ir.pdb
   TARGET_SUPPORT_DIR = compiler\ir\CMakeFiles\myc_ir.dir
 
 
@@ -1721,15 +2149,14 @@ build compiler/ir/CMakeFiles/myc_ir.dir/src/ir_module.cpp.obj: CXX_COMPILER__myc
 #############################################
 # Link the static library compiler\ir\libmyc_ir.a
 
-build compiler/ir/libmyc_ir.a: CXX_STATIC_LIBRARY_LINKER__myc_ir_Release compiler/ir/CMakeFiles/myc_ir.dir/src/ir_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/hir/libmyc_hir.a compiler/mir/libmyc_mir.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build compiler/ir/libmyc_ir.a: CXX_STATIC_LIBRARY_LINKER__myc_ir_Debug compiler/ir/CMakeFiles/myc_ir.dir/src/ir_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/hir/libmyc_hir.a compiler/mir/libmyc_mir.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\ir\CMakeFiles\myc_ir.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = compiler\ir\CMakeFiles\myc_ir.dir\myc_ir.pdb
   TARGET_FILE = compiler\ir\libmyc_ir.a
-  TARGET_PDB = compiler\ir\libmyc_ir.pdb
+  TARGET_PDB = myc_ir.a.dbg
   TARGET_SUPPORT_DIR = compiler\ir\CMakeFiles\myc_ir.dir
 
 
@@ -1823,15 +2250,13 @@ build compiler/ir/install/strip: phony compiler/ir/CMakeFiles/install/strip.util
 
 build cmake_object_order_depends_target_myc_codegen: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_hir cmake_object_order_depends_target_myc_ir cmake_object_order_depends_target_myc_mir cmake_object_order_depends_target_myc_semantic cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_typechecker
 
-build compiler/codegen/CMakeFiles/myc_codegen.dir/src/codegen_module.cpp.obj: CXX_COMPILER__myc_codegen_unscanned_Release C$:/AeonX/compiler/codegen/src/codegen_module.cpp || cmake_object_order_depends_target_myc_codegen
-  CONFIG = Release
+build compiler/codegen/CMakeFiles/myc_codegen.dir/src/codegen_module.cpp.obj: CXX_COMPILER__myc_codegen_unscanned_Debug C$:/AeonX/compiler/codegen/src/codegen_module.cpp || cmake_object_order_depends_target_myc_codegen
+  CONFIG = Debug
   DEP_FILE = compiler\codegen\CMakeFiles\myc_codegen.dir\src\codegen_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/codegen/include -IC:/AeonX/compiler/ir/include -IC:/AeonX/compiler/mir/include -IC:/AeonX/compiler/hir/include -IC:/AeonX/compiler/typechecker/include -IC:/AeonX/compiler/semantic/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include
   OBJECT_DIR = compiler\codegen\CMakeFiles\myc_codegen.dir
   OBJECT_FILE_DIR = compiler\codegen\CMakeFiles\myc_codegen.dir\src
-  TARGET_COMPILE_PDB = compiler\codegen\CMakeFiles\myc_codegen.dir\myc_codegen.pdb
-  TARGET_PDB = compiler\codegen\libmyc_codegen.pdb
   TARGET_SUPPORT_DIR = compiler\codegen\CMakeFiles\myc_codegen.dir
 
 
@@ -1842,15 +2267,14 @@ build compiler/codegen/CMakeFiles/myc_codegen.dir/src/codegen_module.cpp.obj: CX
 #############################################
 # Link the static library compiler\codegen\libmyc_codegen.a
 
-build compiler/codegen/libmyc_codegen.a: CXX_STATIC_LIBRARY_LINKER__myc_codegen_Release compiler/codegen/CMakeFiles/myc_codegen.dir/src/codegen_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/hir/libmyc_hir.a compiler/ir/libmyc_ir.a compiler/mir/libmyc_mir.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build compiler/codegen/libmyc_codegen.a: CXX_STATIC_LIBRARY_LINKER__myc_codegen_Debug compiler/codegen/CMakeFiles/myc_codegen.dir/src/codegen_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/hir/libmyc_hir.a compiler/ir/libmyc_ir.a compiler/mir/libmyc_mir.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\codegen\CMakeFiles\myc_codegen.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = compiler\codegen\CMakeFiles\myc_codegen.dir\myc_codegen.pdb
   TARGET_FILE = compiler\codegen\libmyc_codegen.a
-  TARGET_PDB = compiler\codegen\libmyc_codegen.pdb
+  TARGET_PDB = myc_codegen.a.dbg
   TARGET_SUPPORT_DIR = compiler\codegen\CMakeFiles\myc_codegen.dir
 
 
@@ -1944,15 +2368,13 @@ build compiler/codegen/install/strip: phony compiler/codegen/CMakeFiles/install/
 
 build cmake_object_order_depends_target_myc_llvm_backend: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_codegen cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_hir cmake_object_order_depends_target_myc_ir cmake_object_order_depends_target_myc_mir cmake_object_order_depends_target_myc_semantic cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_typechecker
 
-build compiler/llvm/CMakeFiles/myc_llvm_backend.dir/src/llvm_module.cpp.obj: CXX_COMPILER__myc_llvm_backend_unscanned_Release C$:/AeonX/compiler/llvm/src/llvm_module.cpp || cmake_object_order_depends_target_myc_llvm_backend
-  CONFIG = Release
+build compiler/llvm/CMakeFiles/myc_llvm_backend.dir/src/llvm_module.cpp.obj: CXX_COMPILER__myc_llvm_backend_unscanned_Debug C$:/AeonX/compiler/llvm/src/llvm_module.cpp || cmake_object_order_depends_target_myc_llvm_backend
+  CONFIG = Debug
   DEP_FILE = compiler\llvm\CMakeFiles\myc_llvm_backend.dir\src\llvm_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/llvm/include -IC:/AeonX/compiler/codegen/include -IC:/AeonX/compiler/ir/include -IC:/AeonX/compiler/mir/include -IC:/AeonX/compiler/hir/include -IC:/AeonX/compiler/typechecker/include -IC:/AeonX/compiler/semantic/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include
   OBJECT_DIR = compiler\llvm\CMakeFiles\myc_llvm_backend.dir
   OBJECT_FILE_DIR = compiler\llvm\CMakeFiles\myc_llvm_backend.dir\src
-  TARGET_COMPILE_PDB = compiler\llvm\CMakeFiles\myc_llvm_backend.dir\myc_llvm_backend.pdb
-  TARGET_PDB = compiler\llvm\libmyc_llvm_backend.pdb
   TARGET_SUPPORT_DIR = compiler\llvm\CMakeFiles\myc_llvm_backend.dir
 
 
@@ -1963,15 +2385,14 @@ build compiler/llvm/CMakeFiles/myc_llvm_backend.dir/src/llvm_module.cpp.obj: CXX
 #############################################
 # Link the static library compiler\llvm\libmyc_llvm_backend.a
 
-build compiler/llvm/libmyc_llvm_backend.a: CXX_STATIC_LIBRARY_LINKER__myc_llvm_backend_Release compiler/llvm/CMakeFiles/myc_llvm_backend.dir/src/llvm_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/codegen/libmyc_codegen.a compiler/diagnostics/libmyc_diagnostics.a compiler/hir/libmyc_hir.a compiler/ir/libmyc_ir.a compiler/mir/libmyc_mir.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build compiler/llvm/libmyc_llvm_backend.a: CXX_STATIC_LIBRARY_LINKER__myc_llvm_backend_Debug compiler/llvm/CMakeFiles/myc_llvm_backend.dir/src/llvm_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/codegen/libmyc_codegen.a compiler/diagnostics/libmyc_diagnostics.a compiler/hir/libmyc_hir.a compiler/ir/libmyc_ir.a compiler/mir/libmyc_mir.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\llvm\CMakeFiles\myc_llvm_backend.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = compiler\llvm\CMakeFiles\myc_llvm_backend.dir\myc_llvm_backend.pdb
   TARGET_FILE = compiler\llvm\libmyc_llvm_backend.a
-  TARGET_PDB = compiler\llvm\libmyc_llvm_backend.pdb
+  TARGET_PDB = myc_llvm_backend.a.dbg
   TARGET_SUPPORT_DIR = compiler\llvm\CMakeFiles\myc_llvm_backend.dir
 
 
@@ -2063,39 +2484,24 @@ build compiler/llvm/install/strip: phony compiler/llvm/CMakeFiles/install/strip.
 #############################################
 # Order-only phony target for myc_driver
 
-build cmake_object_order_depends_target_myc_driver: phony || cmake_object_order_depends_target_myc_config cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_source
+build cmake_object_order_depends_target_myc_driver: phony || cmake_object_order_depends_target_myc_cli cmake_object_order_depends_target_myc_commands cmake_object_order_depends_target_myc_common cmake_object_order_depends_target_myc_config cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_source
 
-build compiler/driver/CMakeFiles/myc_driver.dir/src/cli_parser.cpp.obj: CXX_COMPILER__myc_driver_unscanned_Release C$:/AeonX/compiler/driver/src/cli_parser.cpp || cmake_object_order_depends_target_myc_driver
-  CONFIG = Release
-  DEP_FILE = compiler\driver\CMakeFiles\myc_driver.dir\src\cli_parser.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
-  OBJECT_DIR = compiler\driver\CMakeFiles\myc_driver.dir
-  OBJECT_FILE_DIR = compiler\driver\CMakeFiles\myc_driver.dir\src
-  TARGET_COMPILE_PDB = compiler\driver\CMakeFiles\myc_driver.dir\myc_driver.pdb
-  TARGET_PDB = compiler\driver\libmyc_driver.pdb
-  TARGET_SUPPORT_DIR = compiler\driver\CMakeFiles\myc_driver.dir
-
-build compiler/driver/CMakeFiles/myc_driver.dir/src/command_dispatcher.cpp.obj: CXX_COMPILER__myc_driver_unscanned_Release C$:/AeonX/compiler/driver/src/command_dispatcher.cpp || cmake_object_order_depends_target_myc_driver
-  CONFIG = Release
+build compiler/driver/CMakeFiles/myc_driver.dir/src/command_dispatcher.cpp.obj: CXX_COMPILER__myc_driver_unscanned_Debug C$:/AeonX/compiler/driver/src/command_dispatcher.cpp || cmake_object_order_depends_target_myc_driver
+  CONFIG = Debug
   DEP_FILE = compiler\driver\CMakeFiles\myc_driver.dir\src\command_dispatcher.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
   OBJECT_DIR = compiler\driver\CMakeFiles\myc_driver.dir
   OBJECT_FILE_DIR = compiler\driver\CMakeFiles\myc_driver.dir\src
-  TARGET_COMPILE_PDB = compiler\driver\CMakeFiles\myc_driver.dir\myc_driver.pdb
-  TARGET_PDB = compiler\driver\libmyc_driver.pdb
   TARGET_SUPPORT_DIR = compiler\driver\CMakeFiles\myc_driver.dir
 
-build compiler/driver/CMakeFiles/myc_driver.dir/src/compiler_driver.cpp.obj: CXX_COMPILER__myc_driver_unscanned_Release C$:/AeonX/compiler/driver/src/compiler_driver.cpp || cmake_object_order_depends_target_myc_driver
-  CONFIG = Release
+build compiler/driver/CMakeFiles/myc_driver.dir/src/compiler_driver.cpp.obj: CXX_COMPILER__myc_driver_unscanned_Debug C$:/AeonX/compiler/driver/src/compiler_driver.cpp || cmake_object_order_depends_target_myc_driver
+  CONFIG = Debug
   DEP_FILE = compiler\driver\CMakeFiles\myc_driver.dir\src\compiler_driver.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
   OBJECT_DIR = compiler\driver\CMakeFiles\myc_driver.dir
   OBJECT_FILE_DIR = compiler\driver\CMakeFiles\myc_driver.dir\src
-  TARGET_COMPILE_PDB = compiler\driver\CMakeFiles\myc_driver.dir\myc_driver.pdb
-  TARGET_PDB = compiler\driver\libmyc_driver.pdb
   TARGET_SUPPORT_DIR = compiler\driver\CMakeFiles\myc_driver.dir
 
 
@@ -2106,15 +2512,14 @@ build compiler/driver/CMakeFiles/myc_driver.dir/src/compiler_driver.cpp.obj: CXX
 #############################################
 # Link the static library compiler\driver\libmyc_driver.a
 
-build compiler/driver/libmyc_driver.a: CXX_STATIC_LIBRARY_LINKER__myc_driver_Release compiler/driver/CMakeFiles/myc_driver.dir/src/cli_parser.cpp.obj compiler/driver/CMakeFiles/myc_driver.dir/src/command_dispatcher.cpp.obj compiler/driver/CMakeFiles/myc_driver.dir/src/compiler_driver.cpp.obj || compiler/config/libmyc_config.a compiler/diagnostics/libmyc_diagnostics.a compiler/source/libmyc_source.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build compiler/driver/libmyc_driver.a: CXX_STATIC_LIBRARY_LINKER__myc_driver_Debug compiler/driver/CMakeFiles/myc_driver.dir/src/command_dispatcher.cpp.obj compiler/driver/CMakeFiles/myc_driver.dir/src/compiler_driver.cpp.obj || compiler/cli/libmyc_cli.a compiler/commands/libmyc_commands.a compiler/common/libmyc_common.a compiler/config/libmyc_config.a compiler/diagnostics/libmyc_diagnostics.a compiler/source/libmyc_source.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\driver\CMakeFiles\myc_driver.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = compiler\driver\CMakeFiles\myc_driver.dir\myc_driver.pdb
   TARGET_FILE = compiler\driver\libmyc_driver.a
-  TARGET_PDB = compiler\driver\libmyc_driver.pdb
+  TARGET_PDB = myc_driver.a.dbg
   TARGET_SUPPORT_DIR = compiler\driver\CMakeFiles\myc_driver.dir
 
 
@@ -2208,15 +2613,13 @@ build compiler/driver/install/strip: phony compiler/driver/CMakeFiles/install/st
 
 build cmake_object_order_depends_target_myc_runtime: phony || cmake_object_order_depends_target_myc_shared
 
-build runtime/CMakeFiles/myc_runtime.dir/src/runtime_module.cpp.obj: CXX_COMPILER__myc_runtime_unscanned_Release C$:/AeonX/runtime/src/runtime_module.cpp || cmake_object_order_depends_target_myc_runtime
-  CONFIG = Release
+build runtime/CMakeFiles/myc_runtime.dir/src/runtime_module.cpp.obj: CXX_COMPILER__myc_runtime_unscanned_Debug C$:/AeonX/runtime/src/runtime_module.cpp || cmake_object_order_depends_target_myc_runtime
+  CONFIG = Debug
   DEP_FILE = runtime\CMakeFiles\myc_runtime.dir\src\runtime_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/runtime/include -IC:/AeonX/shared/src/../include
   OBJECT_DIR = runtime\CMakeFiles\myc_runtime.dir
   OBJECT_FILE_DIR = runtime\CMakeFiles\myc_runtime.dir\src
-  TARGET_COMPILE_PDB = runtime\CMakeFiles\myc_runtime.dir\myc_runtime.pdb
-  TARGET_PDB = runtime\libmyc_runtime.pdb
   TARGET_SUPPORT_DIR = runtime\CMakeFiles\myc_runtime.dir
 
 
@@ -2227,15 +2630,14 @@ build runtime/CMakeFiles/myc_runtime.dir/src/runtime_module.cpp.obj: CXX_COMPILE
 #############################################
 # Link the static library runtime\libmyc_runtime.a
 
-build runtime/libmyc_runtime.a: CXX_STATIC_LIBRARY_LINKER__myc_runtime_Release runtime/CMakeFiles/myc_runtime.dir/src/runtime_module.cpp.obj || shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build runtime/libmyc_runtime.a: CXX_STATIC_LIBRARY_LINKER__myc_runtime_Debug runtime/CMakeFiles/myc_runtime.dir/src/runtime_module.cpp.obj || shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = runtime\CMakeFiles\myc_runtime.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = runtime\CMakeFiles\myc_runtime.dir\myc_runtime.pdb
   TARGET_FILE = runtime\libmyc_runtime.a
-  TARGET_PDB = runtime\libmyc_runtime.pdb
+  TARGET_PDB = myc_runtime.a.dbg
   TARGET_SUPPORT_DIR = runtime\CMakeFiles\myc_runtime.dir
 
 
@@ -2329,15 +2731,13 @@ build runtime/install/strip: phony runtime/CMakeFiles/install/strip.util
 
 build cmake_object_order_depends_target_myc_stdlib: phony || cmake_object_order_depends_target_myc_runtime cmake_object_order_depends_target_myc_shared
 
-build stdlib/CMakeFiles/myc_stdlib.dir/src/stdlib_module.cpp.obj: CXX_COMPILER__myc_stdlib_unscanned_Release C$:/AeonX/stdlib/src/stdlib_module.cpp || cmake_object_order_depends_target_myc_stdlib
-  CONFIG = Release
+build stdlib/CMakeFiles/myc_stdlib.dir/src/stdlib_module.cpp.obj: CXX_COMPILER__myc_stdlib_unscanned_Debug C$:/AeonX/stdlib/src/stdlib_module.cpp || cmake_object_order_depends_target_myc_stdlib
+  CONFIG = Debug
   DEP_FILE = stdlib\CMakeFiles\myc_stdlib.dir\src\stdlib_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/stdlib/include -IC:/AeonX/runtime/include -IC:/AeonX/shared/src/../include
   OBJECT_DIR = stdlib\CMakeFiles\myc_stdlib.dir
   OBJECT_FILE_DIR = stdlib\CMakeFiles\myc_stdlib.dir\src
-  TARGET_COMPILE_PDB = stdlib\CMakeFiles\myc_stdlib.dir\myc_stdlib.pdb
-  TARGET_PDB = stdlib\libmyc_stdlib.pdb
   TARGET_SUPPORT_DIR = stdlib\CMakeFiles\myc_stdlib.dir
 
 
@@ -2348,15 +2748,14 @@ build stdlib/CMakeFiles/myc_stdlib.dir/src/stdlib_module.cpp.obj: CXX_COMPILER__
 #############################################
 # Link the static library stdlib\libmyc_stdlib.a
 
-build stdlib/libmyc_stdlib.a: CXX_STATIC_LIBRARY_LINKER__myc_stdlib_Release stdlib/CMakeFiles/myc_stdlib.dir/src/stdlib_module.cpp.obj || runtime/libmyc_runtime.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build stdlib/libmyc_stdlib.a: CXX_STATIC_LIBRARY_LINKER__myc_stdlib_Debug stdlib/CMakeFiles/myc_stdlib.dir/src/stdlib_module.cpp.obj || runtime/libmyc_runtime.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = stdlib\CMakeFiles\myc_stdlib.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = stdlib\CMakeFiles\myc_stdlib.dir\myc_stdlib.pdb
   TARGET_FILE = stdlib\libmyc_stdlib.a
-  TARGET_PDB = stdlib\libmyc_stdlib.pdb
+  TARGET_PDB = myc_stdlib.a.dbg
   TARGET_SUPPORT_DIR = stdlib\CMakeFiles\myc_stdlib.dir
 
 
@@ -2450,15 +2849,13 @@ build stdlib/install/strip: phony stdlib/CMakeFiles/install/strip.util
 
 build cmake_object_order_depends_target_myc_dsa: phony || cmake_object_order_depends_target_myc_shared
 
-build dsa/CMakeFiles/myc_dsa.dir/src/dsa_module.cpp.obj: CXX_COMPILER__myc_dsa_unscanned_Release C$:/AeonX/dsa/src/dsa_module.cpp || cmake_object_order_depends_target_myc_dsa
-  CONFIG = Release
+build dsa/CMakeFiles/myc_dsa.dir/src/dsa_module.cpp.obj: CXX_COMPILER__myc_dsa_unscanned_Debug C$:/AeonX/dsa/src/dsa_module.cpp || cmake_object_order_depends_target_myc_dsa
+  CONFIG = Debug
   DEP_FILE = dsa\CMakeFiles\myc_dsa.dir\src\dsa_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/dsa/include -IC:/AeonX/shared/src/../include
   OBJECT_DIR = dsa\CMakeFiles\myc_dsa.dir
   OBJECT_FILE_DIR = dsa\CMakeFiles\myc_dsa.dir\src
-  TARGET_COMPILE_PDB = dsa\CMakeFiles\myc_dsa.dir\myc_dsa.pdb
-  TARGET_PDB = dsa\libmyc_dsa.pdb
   TARGET_SUPPORT_DIR = dsa\CMakeFiles\myc_dsa.dir
 
 
@@ -2469,15 +2866,14 @@ build dsa/CMakeFiles/myc_dsa.dir/src/dsa_module.cpp.obj: CXX_COMPILER__myc_dsa_u
 #############################################
 # Link the static library dsa\libmyc_dsa.a
 
-build dsa/libmyc_dsa.a: CXX_STATIC_LIBRARY_LINKER__myc_dsa_Release dsa/CMakeFiles/myc_dsa.dir/src/dsa_module.cpp.obj || shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build dsa/libmyc_dsa.a: CXX_STATIC_LIBRARY_LINKER__myc_dsa_Debug dsa/CMakeFiles/myc_dsa.dir/src/dsa_module.cpp.obj || shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = dsa\CMakeFiles\myc_dsa.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = dsa\CMakeFiles\myc_dsa.dir\myc_dsa.pdb
   TARGET_FILE = dsa\libmyc_dsa.a
-  TARGET_PDB = dsa\libmyc_dsa.pdb
+  TARGET_PDB = myc_dsa.a.dbg
   TARGET_SUPPORT_DIR = dsa\CMakeFiles\myc_dsa.dir
 
 
@@ -2571,15 +2967,13 @@ build dsa/install/strip: phony dsa/CMakeFiles/install/strip.util
 
 build cmake_object_order_depends_target_myc_optimizer: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_hir cmake_object_order_depends_target_myc_ir cmake_object_order_depends_target_myc_mir cmake_object_order_depends_target_myc_semantic cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_typechecker
 
-build optimizer/CMakeFiles/myc_optimizer.dir/src/optimizer_module.cpp.obj: CXX_COMPILER__myc_optimizer_unscanned_Release C$:/AeonX/optimizer/src/optimizer_module.cpp || cmake_object_order_depends_target_myc_optimizer
-  CONFIG = Release
+build optimizer/CMakeFiles/myc_optimizer.dir/src/optimizer_module.cpp.obj: CXX_COMPILER__myc_optimizer_unscanned_Debug C$:/AeonX/optimizer/src/optimizer_module.cpp || cmake_object_order_depends_target_myc_optimizer
+  CONFIG = Debug
   DEP_FILE = optimizer\CMakeFiles\myc_optimizer.dir\src\optimizer_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/optimizer/include -IC:/AeonX/compiler/ir/include -IC:/AeonX/compiler/mir/include -IC:/AeonX/compiler/hir/include -IC:/AeonX/compiler/typechecker/include -IC:/AeonX/compiler/semantic/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include
   OBJECT_DIR = optimizer\CMakeFiles\myc_optimizer.dir
   OBJECT_FILE_DIR = optimizer\CMakeFiles\myc_optimizer.dir\src
-  TARGET_COMPILE_PDB = optimizer\CMakeFiles\myc_optimizer.dir\myc_optimizer.pdb
-  TARGET_PDB = optimizer\libmyc_optimizer.pdb
   TARGET_SUPPORT_DIR = optimizer\CMakeFiles\myc_optimizer.dir
 
 
@@ -2590,15 +2984,14 @@ build optimizer/CMakeFiles/myc_optimizer.dir/src/optimizer_module.cpp.obj: CXX_C
 #############################################
 # Link the static library optimizer\libmyc_optimizer.a
 
-build optimizer/libmyc_optimizer.a: CXX_STATIC_LIBRARY_LINKER__myc_optimizer_Release optimizer/CMakeFiles/myc_optimizer.dir/src/optimizer_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/hir/libmyc_hir.a compiler/ir/libmyc_ir.a compiler/mir/libmyc_mir.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build optimizer/libmyc_optimizer.a: CXX_STATIC_LIBRARY_LINKER__myc_optimizer_Debug optimizer/CMakeFiles/myc_optimizer.dir/src/optimizer_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/hir/libmyc_hir.a compiler/ir/libmyc_ir.a compiler/mir/libmyc_mir.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = optimizer\CMakeFiles\myc_optimizer.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = optimizer\CMakeFiles\myc_optimizer.dir\myc_optimizer.pdb
   TARGET_FILE = optimizer\libmyc_optimizer.a
-  TARGET_PDB = optimizer\libmyc_optimizer.pdb
+  TARGET_PDB = myc_optimizer.a.dbg
   TARGET_SUPPORT_DIR = optimizer\CMakeFiles\myc_optimizer.dir
 
 
@@ -2692,15 +3085,13 @@ build optimizer/install/strip: phony optimizer/CMakeFiles/install/strip.util
 
 build cmake_object_order_depends_target_myc_backend: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_codegen cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_hir cmake_object_order_depends_target_myc_ir cmake_object_order_depends_target_myc_llvm_backend cmake_object_order_depends_target_myc_mir cmake_object_order_depends_target_myc_semantic cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_typechecker
 
-build backend/CMakeFiles/myc_backend.dir/src/backend_module.cpp.obj: CXX_COMPILER__myc_backend_unscanned_Release C$:/AeonX/backend/src/backend_module.cpp || cmake_object_order_depends_target_myc_backend
-  CONFIG = Release
+build backend/CMakeFiles/myc_backend.dir/src/backend_module.cpp.obj: CXX_COMPILER__myc_backend_unscanned_Debug C$:/AeonX/backend/src/backend_module.cpp || cmake_object_order_depends_target_myc_backend
+  CONFIG = Debug
   DEP_FILE = backend\CMakeFiles\myc_backend.dir\src\backend_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/backend/include -IC:/AeonX/compiler/codegen/include -IC:/AeonX/compiler/ir/include -IC:/AeonX/compiler/mir/include -IC:/AeonX/compiler/hir/include -IC:/AeonX/compiler/typechecker/include -IC:/AeonX/compiler/semantic/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/llvm/include
   OBJECT_DIR = backend\CMakeFiles\myc_backend.dir
   OBJECT_FILE_DIR = backend\CMakeFiles\myc_backend.dir\src
-  TARGET_COMPILE_PDB = backend\CMakeFiles\myc_backend.dir\myc_backend.pdb
-  TARGET_PDB = backend\libmyc_backend.pdb
   TARGET_SUPPORT_DIR = backend\CMakeFiles\myc_backend.dir
 
 
@@ -2711,15 +3102,14 @@ build backend/CMakeFiles/myc_backend.dir/src/backend_module.cpp.obj: CXX_COMPILE
 #############################################
 # Link the static library backend\libmyc_backend.a
 
-build backend/libmyc_backend.a: CXX_STATIC_LIBRARY_LINKER__myc_backend_Release backend/CMakeFiles/myc_backend.dir/src/backend_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/codegen/libmyc_codegen.a compiler/diagnostics/libmyc_diagnostics.a compiler/hir/libmyc_hir.a compiler/ir/libmyc_ir.a compiler/llvm/libmyc_llvm_backend.a compiler/mir/libmyc_mir.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build backend/libmyc_backend.a: CXX_STATIC_LIBRARY_LINKER__myc_backend_Debug backend/CMakeFiles/myc_backend.dir/src/backend_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/codegen/libmyc_codegen.a compiler/diagnostics/libmyc_diagnostics.a compiler/hir/libmyc_hir.a compiler/ir/libmyc_ir.a compiler/llvm/libmyc_llvm_backend.a compiler/mir/libmyc_mir.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = backend\CMakeFiles\myc_backend.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = backend\CMakeFiles\myc_backend.dir\myc_backend.pdb
   TARGET_FILE = backend\libmyc_backend.a
-  TARGET_PDB = backend\libmyc_backend.pdb
+  TARGET_PDB = myc_backend.a.dbg
   TARGET_SUPPORT_DIR = backend\CMakeFiles\myc_backend.dir
 
 
@@ -2813,15 +3203,13 @@ build backend/install/strip: phony backend/CMakeFiles/install/strip.util
 
 build cmake_object_order_depends_target_myc_frontend: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_lexer cmake_object_order_depends_target_myc_parser cmake_object_order_depends_target_myc_semantic cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_source
 
-build frontend/CMakeFiles/myc_frontend.dir/src/frontend_module.cpp.obj: CXX_COMPILER__myc_frontend_unscanned_Release C$:/AeonX/frontend/src/frontend_module.cpp || cmake_object_order_depends_target_myc_frontend
-  CONFIG = Release
+build frontend/CMakeFiles/myc_frontend.dir/src/frontend_module.cpp.obj: CXX_COMPILER__myc_frontend_unscanned_Debug C$:/AeonX/frontend/src/frontend_module.cpp || cmake_object_order_depends_target_myc_frontend
+  CONFIG = Debug
   DEP_FILE = frontend\CMakeFiles\myc_frontend.dir\src\frontend_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/frontend/include -IC:/AeonX/compiler/parser/include -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/compiler/semantic/include
   OBJECT_DIR = frontend\CMakeFiles\myc_frontend.dir
   OBJECT_FILE_DIR = frontend\CMakeFiles\myc_frontend.dir\src
-  TARGET_COMPILE_PDB = frontend\CMakeFiles\myc_frontend.dir\myc_frontend.pdb
-  TARGET_PDB = frontend\libmyc_frontend.pdb
   TARGET_SUPPORT_DIR = frontend\CMakeFiles\myc_frontend.dir
 
 
@@ -2832,15 +3220,14 @@ build frontend/CMakeFiles/myc_frontend.dir/src/frontend_module.cpp.obj: CXX_COMP
 #############################################
 # Link the static library frontend\libmyc_frontend.a
 
-build frontend/libmyc_frontend.a: CXX_STATIC_LIBRARY_LINKER__myc_frontend_Release frontend/CMakeFiles/myc_frontend.dir/src/frontend_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/lexer/libmyc_lexer.a compiler/parser/libmyc_parser.a compiler/semantic/libmyc_semantic.a compiler/source/libmyc_source.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build frontend/libmyc_frontend.a: CXX_STATIC_LIBRARY_LINKER__myc_frontend_Debug frontend/CMakeFiles/myc_frontend.dir/src/frontend_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/lexer/libmyc_lexer.a compiler/parser/libmyc_parser.a compiler/semantic/libmyc_semantic.a compiler/source/libmyc_source.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = frontend\CMakeFiles\myc_frontend.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = frontend\CMakeFiles\myc_frontend.dir\myc_frontend.pdb
   TARGET_FILE = frontend\libmyc_frontend.a
-  TARGET_PDB = frontend\libmyc_frontend.pdb
+  TARGET_PDB = myc_frontend.a.dbg
   TARGET_SUPPORT_DIR = frontend\CMakeFiles\myc_frontend.dir
 
 
@@ -2934,15 +3321,13 @@ build frontend/install/strip: phony frontend/CMakeFiles/install/strip.util
 
 build cmake_object_order_depends_target_myc_package_manager: phony || cmake_object_order_depends_target_myc_shared
 
-build package-manager/CMakeFiles/myc_package_manager.dir/src/package_manager_module.cpp.obj: CXX_COMPILER__myc_package_manager_unscanned_Release C$:/AeonX/package-manager/src/package_manager_module.cpp || cmake_object_order_depends_target_myc_package_manager
-  CONFIG = Release
+build package-manager/CMakeFiles/myc_package_manager.dir/src/package_manager_module.cpp.obj: CXX_COMPILER__myc_package_manager_unscanned_Debug C$:/AeonX/package-manager/src/package_manager_module.cpp || cmake_object_order_depends_target_myc_package_manager
+  CONFIG = Debug
   DEP_FILE = package-manager\CMakeFiles\myc_package_manager.dir\src\package_manager_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/package-manager/include -IC:/AeonX/shared/src/../include
   OBJECT_DIR = package-manager\CMakeFiles\myc_package_manager.dir
   OBJECT_FILE_DIR = package-manager\CMakeFiles\myc_package_manager.dir\src
-  TARGET_COMPILE_PDB = package-manager\CMakeFiles\myc_package_manager.dir\myc_package_manager.pdb
-  TARGET_PDB = package-manager\libmyc_package_manager.pdb
   TARGET_SUPPORT_DIR = package-manager\CMakeFiles\myc_package_manager.dir
 
 
@@ -2953,15 +3338,14 @@ build package-manager/CMakeFiles/myc_package_manager.dir/src/package_manager_mod
 #############################################
 # Link the static library package-manager\libmyc_package_manager.a
 
-build package-manager/libmyc_package_manager.a: CXX_STATIC_LIBRARY_LINKER__myc_package_manager_Release package-manager/CMakeFiles/myc_package_manager.dir/src/package_manager_module.cpp.obj || shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build package-manager/libmyc_package_manager.a: CXX_STATIC_LIBRARY_LINKER__myc_package_manager_Debug package-manager/CMakeFiles/myc_package_manager.dir/src/package_manager_module.cpp.obj || shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = package-manager\CMakeFiles\myc_package_manager.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = package-manager\CMakeFiles\myc_package_manager.dir\myc_package_manager.pdb
   TARGET_FILE = package-manager\libmyc_package_manager.a
-  TARGET_PDB = package-manager\libmyc_package_manager.pdb
+  TARGET_PDB = myc_package_manager.a.dbg
   TARGET_SUPPORT_DIR = package-manager\CMakeFiles\myc_package_manager.dir
 
 
@@ -3055,15 +3439,13 @@ build package-manager/install/strip: phony package-manager/CMakeFiles/install/st
 
 build cmake_object_order_depends_target_myc_language_server: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_frontend cmake_object_order_depends_target_myc_lexer cmake_object_order_depends_target_myc_parser cmake_object_order_depends_target_myc_semantic cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_source
 
-build language-server/CMakeFiles/myc_language_server.dir/src/language_server_module.cpp.obj: CXX_COMPILER__myc_language_server_unscanned_Release C$:/AeonX/language-server/src/language_server_module.cpp || cmake_object_order_depends_target_myc_language_server
-  CONFIG = Release
+build language-server/CMakeFiles/myc_language_server.dir/src/language_server_module.cpp.obj: CXX_COMPILER__myc_language_server_unscanned_Debug C$:/AeonX/language-server/src/language_server_module.cpp || cmake_object_order_depends_target_myc_language_server
+  CONFIG = Debug
   DEP_FILE = language-server\CMakeFiles\myc_language_server.dir\src\language_server_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/language-server/include -IC:/AeonX/frontend/include -IC:/AeonX/compiler/parser/include -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/compiler/semantic/include
   OBJECT_DIR = language-server\CMakeFiles\myc_language_server.dir
   OBJECT_FILE_DIR = language-server\CMakeFiles\myc_language_server.dir\src
-  TARGET_COMPILE_PDB = language-server\CMakeFiles\myc_language_server.dir\myc_language_server.pdb
-  TARGET_PDB = language-server\libmyc_language_server.pdb
   TARGET_SUPPORT_DIR = language-server\CMakeFiles\myc_language_server.dir
 
 
@@ -3074,15 +3456,14 @@ build language-server/CMakeFiles/myc_language_server.dir/src/language_server_mod
 #############################################
 # Link the static library language-server\libmyc_language_server.a
 
-build language-server/libmyc_language_server.a: CXX_STATIC_LIBRARY_LINKER__myc_language_server_Release language-server/CMakeFiles/myc_language_server.dir/src/language_server_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/lexer/libmyc_lexer.a compiler/parser/libmyc_parser.a compiler/semantic/libmyc_semantic.a compiler/source/libmyc_source.a frontend/libmyc_frontend.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build language-server/libmyc_language_server.a: CXX_STATIC_LIBRARY_LINKER__myc_language_server_Debug language-server/CMakeFiles/myc_language_server.dir/src/language_server_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/lexer/libmyc_lexer.a compiler/parser/libmyc_parser.a compiler/semantic/libmyc_semantic.a compiler/source/libmyc_source.a frontend/libmyc_frontend.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = language-server\CMakeFiles\myc_language_server.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = language-server\CMakeFiles\myc_language_server.dir\myc_language_server.pdb
   TARGET_FILE = language-server\libmyc_language_server.a
-  TARGET_PDB = language-server\libmyc_language_server.pdb
+  TARGET_PDB = myc_language_server.a.dbg
   TARGET_SUPPORT_DIR = language-server\CMakeFiles\myc_language_server.dir
 
 
@@ -3176,15 +3557,13 @@ build language-server/install/strip: phony language-server/CMakeFiles/install/st
 
 build cmake_object_order_depends_target_myc_formatter: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_frontend cmake_object_order_depends_target_myc_lexer cmake_object_order_depends_target_myc_parser cmake_object_order_depends_target_myc_semantic cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_source
 
-build formatter/CMakeFiles/myc_formatter.dir/src/formatter_module.cpp.obj: CXX_COMPILER__myc_formatter_unscanned_Release C$:/AeonX/formatter/src/formatter_module.cpp || cmake_object_order_depends_target_myc_formatter
-  CONFIG = Release
+build formatter/CMakeFiles/myc_formatter.dir/src/formatter_module.cpp.obj: CXX_COMPILER__myc_formatter_unscanned_Debug C$:/AeonX/formatter/src/formatter_module.cpp || cmake_object_order_depends_target_myc_formatter
+  CONFIG = Debug
   DEP_FILE = formatter\CMakeFiles\myc_formatter.dir\src\formatter_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/formatter/include -IC:/AeonX/frontend/include -IC:/AeonX/compiler/parser/include -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/compiler/semantic/include
   OBJECT_DIR = formatter\CMakeFiles\myc_formatter.dir
   OBJECT_FILE_DIR = formatter\CMakeFiles\myc_formatter.dir\src
-  TARGET_COMPILE_PDB = formatter\CMakeFiles\myc_formatter.dir\myc_formatter.pdb
-  TARGET_PDB = formatter\libmyc_formatter.pdb
   TARGET_SUPPORT_DIR = formatter\CMakeFiles\myc_formatter.dir
 
 
@@ -3195,15 +3574,14 @@ build formatter/CMakeFiles/myc_formatter.dir/src/formatter_module.cpp.obj: CXX_C
 #############################################
 # Link the static library formatter\libmyc_formatter.a
 
-build formatter/libmyc_formatter.a: CXX_STATIC_LIBRARY_LINKER__myc_formatter_Release formatter/CMakeFiles/myc_formatter.dir/src/formatter_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/lexer/libmyc_lexer.a compiler/parser/libmyc_parser.a compiler/semantic/libmyc_semantic.a compiler/source/libmyc_source.a frontend/libmyc_frontend.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build formatter/libmyc_formatter.a: CXX_STATIC_LIBRARY_LINKER__myc_formatter_Debug formatter/CMakeFiles/myc_formatter.dir/src/formatter_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/lexer/libmyc_lexer.a compiler/parser/libmyc_parser.a compiler/semantic/libmyc_semantic.a compiler/source/libmyc_source.a frontend/libmyc_frontend.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = formatter\CMakeFiles\myc_formatter.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = formatter\CMakeFiles\myc_formatter.dir\myc_formatter.pdb
   TARGET_FILE = formatter\libmyc_formatter.a
-  TARGET_PDB = formatter\libmyc_formatter.pdb
+  TARGET_PDB = myc_formatter.a.dbg
   TARGET_SUPPORT_DIR = formatter\CMakeFiles\myc_formatter.dir
 
 
@@ -3297,15 +3675,13 @@ build formatter/install/strip: phony formatter/CMakeFiles/install/strip.util
 
 build cmake_object_order_depends_target_myc_linter: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_semantic cmake_object_order_depends_target_myc_shared
 
-build linter/CMakeFiles/myc_linter.dir/src/linter_module.cpp.obj: CXX_COMPILER__myc_linter_unscanned_Release C$:/AeonX/linter/src/linter_module.cpp || cmake_object_order_depends_target_myc_linter
-  CONFIG = Release
+build linter/CMakeFiles/myc_linter.dir/src/linter_module.cpp.obj: CXX_COMPILER__myc_linter_unscanned_Debug C$:/AeonX/linter/src/linter_module.cpp || cmake_object_order_depends_target_myc_linter
+  CONFIG = Debug
   DEP_FILE = linter\CMakeFiles\myc_linter.dir\src\linter_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/linter/include -IC:/AeonX/compiler/semantic/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include
   OBJECT_DIR = linter\CMakeFiles\myc_linter.dir
   OBJECT_FILE_DIR = linter\CMakeFiles\myc_linter.dir\src
-  TARGET_COMPILE_PDB = linter\CMakeFiles\myc_linter.dir\myc_linter.pdb
-  TARGET_PDB = linter\libmyc_linter.pdb
   TARGET_SUPPORT_DIR = linter\CMakeFiles\myc_linter.dir
 
 
@@ -3316,15 +3692,14 @@ build linter/CMakeFiles/myc_linter.dir/src/linter_module.cpp.obj: CXX_COMPILER__
 #############################################
 # Link the static library linter\libmyc_linter.a
 
-build linter/libmyc_linter.a: CXX_STATIC_LIBRARY_LINKER__myc_linter_Release linter/CMakeFiles/myc_linter.dir/src/linter_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/semantic/libmyc_semantic.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build linter/libmyc_linter.a: CXX_STATIC_LIBRARY_LINKER__myc_linter_Debug linter/CMakeFiles/myc_linter.dir/src/linter_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/semantic/libmyc_semantic.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = linter\CMakeFiles\myc_linter.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = linter\CMakeFiles\myc_linter.dir\myc_linter.pdb
   TARGET_FILE = linter\libmyc_linter.a
-  TARGET_PDB = linter\libmyc_linter.pdb
+  TARGET_PDB = myc_linter.a.dbg
   TARGET_SUPPORT_DIR = linter\CMakeFiles\myc_linter.dir
 
 
@@ -3418,15 +3793,13 @@ build linter/install/strip: phony linter/CMakeFiles/install/strip.util
 
 build cmake_object_order_depends_target_myc_debugger: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_codegen cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_hir cmake_object_order_depends_target_myc_ir cmake_object_order_depends_target_myc_mir cmake_object_order_depends_target_myc_semantic cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_typechecker
 
-build debugger/CMakeFiles/myc_debugger.dir/src/debugger_module.cpp.obj: CXX_COMPILER__myc_debugger_unscanned_Release C$:/AeonX/debugger/src/debugger_module.cpp || cmake_object_order_depends_target_myc_debugger
-  CONFIG = Release
+build debugger/CMakeFiles/myc_debugger.dir/src/debugger_module.cpp.obj: CXX_COMPILER__myc_debugger_unscanned_Debug C$:/AeonX/debugger/src/debugger_module.cpp || cmake_object_order_depends_target_myc_debugger
+  CONFIG = Debug
   DEP_FILE = debugger\CMakeFiles\myc_debugger.dir\src\debugger_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/debugger/include -IC:/AeonX/compiler/codegen/include -IC:/AeonX/compiler/ir/include -IC:/AeonX/compiler/mir/include -IC:/AeonX/compiler/hir/include -IC:/AeonX/compiler/typechecker/include -IC:/AeonX/compiler/semantic/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include
   OBJECT_DIR = debugger\CMakeFiles\myc_debugger.dir
   OBJECT_FILE_DIR = debugger\CMakeFiles\myc_debugger.dir\src
-  TARGET_COMPILE_PDB = debugger\CMakeFiles\myc_debugger.dir\myc_debugger.pdb
-  TARGET_PDB = debugger\libmyc_debugger.pdb
   TARGET_SUPPORT_DIR = debugger\CMakeFiles\myc_debugger.dir
 
 
@@ -3437,15 +3810,14 @@ build debugger/CMakeFiles/myc_debugger.dir/src/debugger_module.cpp.obj: CXX_COMP
 #############################################
 # Link the static library debugger\libmyc_debugger.a
 
-build debugger/libmyc_debugger.a: CXX_STATIC_LIBRARY_LINKER__myc_debugger_Release debugger/CMakeFiles/myc_debugger.dir/src/debugger_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/codegen/libmyc_codegen.a compiler/diagnostics/libmyc_diagnostics.a compiler/hir/libmyc_hir.a compiler/ir/libmyc_ir.a compiler/mir/libmyc_mir.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build debugger/libmyc_debugger.a: CXX_STATIC_LIBRARY_LINKER__myc_debugger_Debug debugger/CMakeFiles/myc_debugger.dir/src/debugger_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/codegen/libmyc_codegen.a compiler/diagnostics/libmyc_diagnostics.a compiler/hir/libmyc_hir.a compiler/ir/libmyc_ir.a compiler/mir/libmyc_mir.a compiler/semantic/libmyc_semantic.a compiler/typechecker/libmyc_typechecker.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = debugger\CMakeFiles\myc_debugger.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = debugger\CMakeFiles\myc_debugger.dir\myc_debugger.pdb
   TARGET_FILE = debugger\libmyc_debugger.a
-  TARGET_PDB = debugger\libmyc_debugger.pdb
+  TARGET_PDB = myc_debugger.a.dbg
   TARGET_SUPPORT_DIR = debugger\CMakeFiles\myc_debugger.dir
 
 
@@ -3539,15 +3911,13 @@ build debugger/install/strip: phony debugger/CMakeFiles/install/strip.util
 
 build cmake_object_order_depends_target_myc_ide: phony || cmake_object_order_depends_target_myc_ast cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_frontend cmake_object_order_depends_target_myc_language_server cmake_object_order_depends_target_myc_lexer cmake_object_order_depends_target_myc_parser cmake_object_order_depends_target_myc_semantic cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_source
 
-build ide/CMakeFiles/myc_ide.dir/src/ide_module.cpp.obj: CXX_COMPILER__myc_ide_unscanned_Release C$:/AeonX/ide/src/ide_module.cpp || cmake_object_order_depends_target_myc_ide
-  CONFIG = Release
+build ide/CMakeFiles/myc_ide.dir/src/ide_module.cpp.obj: CXX_COMPILER__myc_ide_unscanned_Debug C$:/AeonX/ide/src/ide_module.cpp || cmake_object_order_depends_target_myc_ide
+  CONFIG = Debug
   DEP_FILE = ide\CMakeFiles\myc_ide.dir\src\ide_module.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/ide/include -IC:/AeonX/language-server/include -IC:/AeonX/frontend/include -IC:/AeonX/compiler/parser/include -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/ast/include -IC:/AeonX/compiler/semantic/include
   OBJECT_DIR = ide\CMakeFiles\myc_ide.dir
   OBJECT_FILE_DIR = ide\CMakeFiles\myc_ide.dir\src
-  TARGET_COMPILE_PDB = ide\CMakeFiles\myc_ide.dir\myc_ide.pdb
-  TARGET_PDB = ide\libmyc_ide.pdb
   TARGET_SUPPORT_DIR = ide\CMakeFiles\myc_ide.dir
 
 
@@ -3558,15 +3928,14 @@ build ide/CMakeFiles/myc_ide.dir/src/ide_module.cpp.obj: CXX_COMPILER__myc_ide_u
 #############################################
 # Link the static library ide\libmyc_ide.a
 
-build ide/libmyc_ide.a: CXX_STATIC_LIBRARY_LINKER__myc_ide_Release ide/CMakeFiles/myc_ide.dir/src/ide_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/lexer/libmyc_lexer.a compiler/parser/libmyc_parser.a compiler/semantic/libmyc_semantic.a compiler/source/libmyc_source.a frontend/libmyc_frontend.a language-server/libmyc_language_server.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
+build ide/libmyc_ide.a: CXX_STATIC_LIBRARY_LINKER__myc_ide_Debug ide/CMakeFiles/myc_ide.dir/src/ide_module.cpp.obj || compiler/ast/libmyc_ast.a compiler/diagnostics/libmyc_diagnostics.a compiler/lexer/libmyc_lexer.a compiler/parser/libmyc_parser.a compiler/semantic/libmyc_semantic.a compiler/source/libmyc_source.a frontend/libmyc_frontend.a language-server/libmyc_language_server.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = ide\CMakeFiles\myc_ide.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = ide\CMakeFiles\myc_ide.dir\myc_ide.pdb
   TARGET_FILE = ide\libmyc_ide.a
-  TARGET_PDB = ide\libmyc_ide.pdb
+  TARGET_PDB = myc_ide.a.dbg
   TARGET_SUPPORT_DIR = ide\CMakeFiles\myc_ide.dir
 
 
@@ -3740,72 +4109,60 @@ build tests/install/strip: phony tests/CMakeFiles/install/strip.util
 #############################################
 # Order-only phony target for myc_tests
 
-build cmake_object_order_depends_target_myc_tests: phony || cmake_object_order_depends_target_myc_config cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_driver cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_source
+build cmake_object_order_depends_target_myc_tests: phony || cmake_object_order_depends_target_myc_cli cmake_object_order_depends_target_myc_commands cmake_object_order_depends_target_myc_common cmake_object_order_depends_target_myc_config cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_driver cmake_object_order_depends_target_myc_shared cmake_object_order_depends_target_myc_source
 
-build tests/unit/CMakeFiles/myc_tests.dir/myc_test_main.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Release C$:/AeonX/tests/unit/myc_test_main.cpp || cmake_object_order_depends_target_myc_tests
-  CONFIG = Release
+build tests/unit/CMakeFiles/myc_tests.dir/myc_test_main.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Debug C$:/AeonX/tests/unit/myc_test_main.cpp || cmake_object_order_depends_target_myc_tests
+  CONFIG = Debug
   DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\myc_test_main.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
   OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
   OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
-  TARGET_COMPILE_PDB = tests\unit\CMakeFiles\myc_tests.dir\
-  TARGET_PDB = tests\unit\myc_tests.pdb
   TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
 
-build tests/unit/CMakeFiles/myc_tests.dir/test_config.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Release C$:/AeonX/tests/unit/test_config.cpp || cmake_object_order_depends_target_myc_tests
-  CONFIG = Release
+build tests/unit/CMakeFiles/myc_tests.dir/test_config.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Debug C$:/AeonX/tests/unit/test_config.cpp || cmake_object_order_depends_target_myc_tests
+  CONFIG = Debug
   DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\test_config.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
   OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
   OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
-  TARGET_COMPILE_PDB = tests\unit\CMakeFiles\myc_tests.dir\
-  TARGET_PDB = tests\unit\myc_tests.pdb
   TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
 
-build tests/unit/CMakeFiles/myc_tests.dir/test_diagnostics.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Release C$:/AeonX/tests/unit/test_diagnostics.cpp || cmake_object_order_depends_target_myc_tests
-  CONFIG = Release
+build tests/unit/CMakeFiles/myc_tests.dir/test_diagnostics.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Debug C$:/AeonX/tests/unit/test_diagnostics.cpp || cmake_object_order_depends_target_myc_tests
+  CONFIG = Debug
   DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\test_diagnostics.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
   OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
   OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
-  TARGET_COMPILE_PDB = tests\unit\CMakeFiles\myc_tests.dir\
-  TARGET_PDB = tests\unit\myc_tests.pdb
   TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
 
-build tests/unit/CMakeFiles/myc_tests.dir/test_source.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Release C$:/AeonX/tests/unit/test_source.cpp || cmake_object_order_depends_target_myc_tests
-  CONFIG = Release
+build tests/unit/CMakeFiles/myc_tests.dir/test_source.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Debug C$:/AeonX/tests/unit/test_source.cpp || cmake_object_order_depends_target_myc_tests
+  CONFIG = Debug
   DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\test_source.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
   OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
   OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
-  TARGET_COMPILE_PDB = tests\unit\CMakeFiles\myc_tests.dir\
-  TARGET_PDB = tests\unit\myc_tests.pdb
   TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
 
-build tests/unit/CMakeFiles/myc_tests.dir/test_version.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Release C$:/AeonX/tests/unit/test_version.cpp || cmake_object_order_depends_target_myc_tests
-  CONFIG = Release
+build tests/unit/CMakeFiles/myc_tests.dir/test_version.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Debug C$:/AeonX/tests/unit/test_version.cpp || cmake_object_order_depends_target_myc_tests
+  CONFIG = Debug
   DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\test_version.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
   OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
   OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
-  TARGET_COMPILE_PDB = tests\unit\CMakeFiles\myc_tests.dir\
-  TARGET_PDB = tests\unit\myc_tests.pdb
   TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
 
-build tests/unit/CMakeFiles/myc_tests.dir/test_cli.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Release C$:/AeonX/tests/unit/test_cli.cpp || cmake_object_order_depends_target_myc_tests
-  CONFIG = Release
+build tests/unit/CMakeFiles/myc_tests.dir/test_cli.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Debug C$:/AeonX/tests/unit/test_cli.cpp || cmake_object_order_depends_target_myc_tests
+  CONFIG = Debug
   DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\test_cli.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
   OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
   OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
-  TARGET_COMPILE_PDB = tests\unit\CMakeFiles\myc_tests.dir\
-  TARGET_PDB = tests\unit\myc_tests.pdb
   TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
 
 
@@ -3816,17 +4173,16 @@ build tests/unit/CMakeFiles/myc_tests.dir/test_cli.cpp.obj: CXX_COMPILER__myc_te
 #############################################
 # Link the executable tests\unit\myc_tests.exe
 
-build tests/unit/myc_tests.exe: CXX_EXECUTABLE_LINKER__myc_tests_Release tests/unit/CMakeFiles/myc_tests.dir/myc_test_main.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_config.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_diagnostics.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_source.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_version.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_cli.cpp.obj | compiler/driver/libmyc_driver.a shared/src/libmyc_shared.a compiler/config/libmyc_config.a compiler/source/libmyc_source.a compiler/diagnostics/libmyc_diagnostics.a shared/src/libmyc_shared.a || compiler/config/libmyc_config.a compiler/diagnostics/libmyc_diagnostics.a compiler/driver/libmyc_driver.a compiler/source/libmyc_source.a shared/src/libmyc_shared.a
-  CONFIG = Release
-  FLAGS = -O3 -DNDEBUG
-  LINK_LIBRARIES = compiler/driver/libmyc_driver.a  shared/src/libmyc_shared.a  compiler/config/libmyc_config.a  compiler/source/libmyc_source.a  compiler/diagnostics/libmyc_diagnostics.a  shared/src/libmyc_shared.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+build tests/unit/myc_tests.exe: CXX_EXECUTABLE_LINKER__myc_tests_Debug tests/unit/CMakeFiles/myc_tests.dir/myc_test_main.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_config.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_diagnostics.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_source.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_version.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_cli.cpp.obj | compiler/driver/libmyc_driver.a compiler/commands/libmyc_commands.a compiler/cli/libmyc_cli.a shared/src/libmyc_shared.a compiler/common/libmyc_common.a compiler/config/libmyc_config.a compiler/source/libmyc_source.a compiler/diagnostics/libmyc_diagnostics.a shared/src/libmyc_shared.a || compiler/cli/libmyc_cli.a compiler/commands/libmyc_commands.a compiler/common/libmyc_common.a compiler/config/libmyc_config.a compiler/diagnostics/libmyc_diagnostics.a compiler/driver/libmyc_driver.a compiler/source/libmyc_source.a shared/src/libmyc_shared.a
+  CONFIG = Debug
+  FLAGS = -g
+  LINK_LIBRARIES = compiler/driver/libmyc_driver.a  compiler/commands/libmyc_commands.a  compiler/cli/libmyc_cli.a  shared/src/libmyc_shared.a  compiler/common/libmyc_common.a  compiler/config/libmyc_config.a  compiler/source/libmyc_source.a  compiler/diagnostics/libmyc_diagnostics.a  shared/src/libmyc_shared.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = tests\unit\CMakeFiles\myc_tests.dir\
   TARGET_FILE = tests\unit\myc_tests.exe
   TARGET_IMPLIB = tests\unit\libmyc_tests.dll.a
-  TARGET_PDB = tests\unit\myc_tests.pdb
+  TARGET_PDB = myc_tests.exe.dbg
   TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
 
 
@@ -3995,7 +4351,13 @@ build libmyc_ast.a: phony compiler/ast/libmyc_ast.a
 
 build libmyc_backend.a: phony backend/libmyc_backend.a
 
+build libmyc_cli.a: phony compiler/cli/libmyc_cli.a
+
 build libmyc_codegen.a: phony compiler/codegen/libmyc_codegen.a
+
+build libmyc_commands.a: phony compiler/commands/libmyc_commands.a
+
+build libmyc_common.a: phony compiler/common/libmyc_common.a
 
 build libmyc_config.a: phony compiler/config/libmyc_config.a
 
@@ -4053,7 +4415,13 @@ build myc_ast: phony compiler/ast/libmyc_ast.a
 
 build myc_backend: phony backend/libmyc_backend.a
 
+build myc_cli: phony compiler/cli/libmyc_cli.a
+
 build myc_codegen: phony compiler/codegen/libmyc_codegen.a
+
+build myc_commands: phony compiler/commands/libmyc_commands.a
+
+build myc_common: phony compiler/common/libmyc_common.a
 
 build myc_config: phony compiler/config/libmyc_config.a
 
@@ -4129,7 +4497,7 @@ build backend/all: phony backend/libmyc_backend.a
 #############################################
 # Folder: C:/AeonX/build-release/compiler
 
-build compiler/all: phony compiler/config/all compiler/diagnostics/all compiler/source/all compiler/lexer/all compiler/parser/all compiler/ast/all compiler/semantic/all compiler/typechecker/all compiler/hir/all compiler/mir/all compiler/ir/all compiler/codegen/all compiler/llvm/all compiler/driver/all
+build compiler/all: phony compiler/config/all compiler/diagnostics/all compiler/exitcodes/all compiler/common/all compiler/cli/all compiler/commands/all compiler/source/all compiler/lexer/all compiler/parser/all compiler/ast/all compiler/semantic/all compiler/typechecker/all compiler/hir/all compiler/mir/all compiler/ir/all compiler/codegen/all compiler/llvm/all compiler/driver/all
 
 # =============================================================================
 
@@ -4141,9 +4509,30 @@ build compiler/ast/all: phony compiler/ast/libmyc_ast.a
 # =============================================================================
 
 #############################################
+# Folder: C:/AeonX/build-release/compiler/cli
+
+build compiler/cli/all: phony compiler/cli/libmyc_cli.a
+
+# =============================================================================
+
+#############################################
 # Folder: C:/AeonX/build-release/compiler/codegen
 
 build compiler/codegen/all: phony compiler/codegen/libmyc_codegen.a
+
+# =============================================================================
+
+#############################################
+# Folder: C:/AeonX/build-release/compiler/commands
+
+build compiler/commands/all: phony compiler/commands/libmyc_commands.a
+
+# =============================================================================
+
+#############################################
+# Folder: C:/AeonX/build-release/compiler/common
+
+build compiler/common/all: phony compiler/common/libmyc_common.a
 
 # =============================================================================
 
@@ -4165,6 +4554,13 @@ build compiler/diagnostics/all: phony compiler/diagnostics/libmyc_diagnostics.a
 # Folder: C:/AeonX/build-release/compiler/driver
 
 build compiler/driver/all: phony compiler/driver/libmyc_driver.a
+
+# =============================================================================
+
+#############################################
+# Folder: C:/AeonX/build-release/compiler/exitcodes
+
+build compiler/exitcodes/all: phony
 
 # =============================================================================
 
@@ -4348,14 +4744,14 @@ build tests/unit/all: phony tests/unit/myc_tests.exe
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja C$:/AeonX/build-release/cmake_install.cmake C$:/AeonX/build-release/shared/cmake_install.cmake C$:/AeonX/build-release/shared/src/cmake_install.cmake C$:/AeonX/build-release/compiler/cmake_install.cmake C$:/AeonX/build-release/compiler/config/cmake_install.cmake C$:/AeonX/build-release/compiler/diagnostics/cmake_install.cmake C$:/AeonX/build-release/compiler/source/cmake_install.cmake C$:/AeonX/build-release/compiler/lexer/cmake_install.cmake C$:/AeonX/build-release/compiler/parser/cmake_install.cmake C$:/AeonX/build-release/compiler/ast/cmake_install.cmake C$:/AeonX/build-release/compiler/semantic/cmake_install.cmake C$:/AeonX/build-release/compiler/typechecker/cmake_install.cmake C$:/AeonX/build-release/compiler/hir/cmake_install.cmake C$:/AeonX/build-release/compiler/mir/cmake_install.cmake C$:/AeonX/build-release/compiler/ir/cmake_install.cmake C$:/AeonX/build-release/compiler/codegen/cmake_install.cmake C$:/AeonX/build-release/compiler/llvm/cmake_install.cmake C$:/AeonX/build-release/compiler/driver/cmake_install.cmake C$:/AeonX/build-release/runtime/cmake_install.cmake C$:/AeonX/build-release/stdlib/cmake_install.cmake C$:/AeonX/build-release/dsa/cmake_install.cmake C$:/AeonX/build-release/optimizer/cmake_install.cmake C$:/AeonX/build-release/backend/cmake_install.cmake C$:/AeonX/build-release/frontend/cmake_install.cmake C$:/AeonX/build-release/package-manager/cmake_install.cmake C$:/AeonX/build-release/language-server/cmake_install.cmake C$:/AeonX/build-release/formatter/cmake_install.cmake C$:/AeonX/build-release/linter/cmake_install.cmake C$:/AeonX/build-release/debugger/cmake_install.cmake C$:/AeonX/build-release/ide/cmake_install.cmake C$:/AeonX/build-release/tests/cmake_install.cmake C$:/AeonX/build-release/tests/unit/cmake_install.cmake C$:/AeonX/build-release/examples/cmake_install.cmake C$:/AeonX/build-release/CTestTestfile.cmake C$:/AeonX/build-release/tests/CTestTestfile.cmake C$:/AeonX/build-release/tests/unit/CTestTestfile.cmake C$:/AeonX/build-release/examples/CTestTestfile.cmake: RERUN_CMAKE | C$:/AeonX/CMakeLists.txt C$:/AeonX/backend/CMakeLists.txt C$:/AeonX/cmake/CompilerWarnings.cmake C$:/AeonX/cmake/MycOptions.cmake C$:/AeonX/compiler/CMakeLists.txt C$:/AeonX/compiler/ast/CMakeLists.txt C$:/AeonX/compiler/codegen/CMakeLists.txt C$:/AeonX/compiler/config/CMakeLists.txt C$:/AeonX/compiler/diagnostics/CMakeLists.txt C$:/AeonX/compiler/driver/CMakeLists.txt C$:/AeonX/compiler/hir/CMakeLists.txt C$:/AeonX/compiler/ir/CMakeLists.txt C$:/AeonX/compiler/lexer/CMakeLists.txt C$:/AeonX/compiler/llvm/CMakeLists.txt C$:/AeonX/compiler/mir/CMakeLists.txt C$:/AeonX/compiler/parser/CMakeLists.txt C$:/AeonX/compiler/semantic/CMakeLists.txt C$:/AeonX/compiler/source/CMakeLists.txt C$:/AeonX/compiler/typechecker/CMakeLists.txt C$:/AeonX/debugger/CMakeLists.txt C$:/AeonX/dsa/CMakeLists.txt C$:/AeonX/examples/CMakeLists.txt C$:/AeonX/formatter/CMakeLists.txt C$:/AeonX/frontend/CMakeLists.txt C$:/AeonX/ide/CMakeLists.txt C$:/AeonX/language-server/CMakeLists.txt C$:/AeonX/linter/CMakeLists.txt C$:/AeonX/optimizer/CMakeLists.txt C$:/AeonX/package-manager/CMakeLists.txt C$:/AeonX/runtime/CMakeLists.txt C$:/AeonX/shared/CMakeLists.txt C$:/AeonX/shared/src/CMakeLists.txt C$:/AeonX/stdlib/CMakeLists.txt C$:/AeonX/tests/CMakeLists.txt C$:/AeonX/tests/unit/CMakeLists.txt C$:/msys64/mingw64/share/cmake/Modules/CMakeCXXCompiler.cmake.in C$:/msys64/mingw64/share/cmake/Modules/CMakeCXXCompilerABI.cpp C$:/msys64/mingw64/share/cmake/Modules/CMakeCXXInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeCommonLanguageInclude.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeCompilerIdDetection.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeDetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeDetermineCompilerABI.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeDetermineCompilerId.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeDetermineCompilerSupport.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeDetermineRCCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeDetermineSystem.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeFindBinUtils.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeGenericSystem.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeInitializeConfigs.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeLanguageInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeNinjaFindMake.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeParseImplicitIncludeInfo.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeParseImplicitLinkInfo.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeParseLibraryArchitecture.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeRCCompiler.cmake.in C$:/msys64/mingw64/share/cmake/Modules/CMakeRCInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeSystem.cmake.in C$:/msys64/mingw64/share/cmake/Modules/CMakeSystemSpecificInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeTestCXXCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeTestCompilerCommon.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeTestRCCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/ADSP-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/ARMCC-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/ARMClang-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/AppleClang-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Borland-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang-CXX-CXXImportStd.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang-DetermineCompilerInternal.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang-FindBinUtils.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Cray-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/CrayClang-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Diab-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Embarcadero-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Fujitsu-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/GHS-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/HP-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/IAR-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Intel-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/MSVC-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/NVHPC-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/NVIDIA-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/OrangeC-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/PGI-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/PathScale-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/PellesC-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Renesas-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/SCO-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/TI-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/TIClang-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Tasking-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Watcom-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/XL-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Internal/CMakeCXXLinkerInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/Internal/CMakeDetermineLinkerId.cmake C$:/msys64/mingw64/share/cmake/Modules/Internal/CMakeInspectCXXLinker.cmake C$:/msys64/mingw64/share/cmake/Modules/Internal/FeatureTesting.cmake C$:/msys64/mingw64/share/cmake/Modules/Linker/GNU-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Linker/GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Linker/GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Linker/Windows-GNU-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Linker/Windows-GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Clang-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Clang.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Determine-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Initialize.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-windres.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/4.4.0/CMakeCXXCompiler.cmake CMakeFiles/4.4.0/CMakeRCCompiler.cmake CMakeFiles/4.4.0/CMakeSystem.cmake
+build build.ninja C$:/AeonX/build-release/cmake_install.cmake C$:/AeonX/build-release/shared/cmake_install.cmake C$:/AeonX/build-release/shared/src/cmake_install.cmake C$:/AeonX/build-release/compiler/cmake_install.cmake C$:/AeonX/build-release/compiler/config/cmake_install.cmake C$:/AeonX/build-release/compiler/diagnostics/cmake_install.cmake C$:/AeonX/build-release/compiler/exitcodes/cmake_install.cmake C$:/AeonX/build-release/compiler/common/cmake_install.cmake C$:/AeonX/build-release/compiler/cli/cmake_install.cmake C$:/AeonX/build-release/compiler/commands/cmake_install.cmake C$:/AeonX/build-release/compiler/source/cmake_install.cmake C$:/AeonX/build-release/compiler/lexer/cmake_install.cmake C$:/AeonX/build-release/compiler/parser/cmake_install.cmake C$:/AeonX/build-release/compiler/ast/cmake_install.cmake C$:/AeonX/build-release/compiler/semantic/cmake_install.cmake C$:/AeonX/build-release/compiler/typechecker/cmake_install.cmake C$:/AeonX/build-release/compiler/hir/cmake_install.cmake C$:/AeonX/build-release/compiler/mir/cmake_install.cmake C$:/AeonX/build-release/compiler/ir/cmake_install.cmake C$:/AeonX/build-release/compiler/codegen/cmake_install.cmake C$:/AeonX/build-release/compiler/llvm/cmake_install.cmake C$:/AeonX/build-release/compiler/driver/cmake_install.cmake C$:/AeonX/build-release/runtime/cmake_install.cmake C$:/AeonX/build-release/stdlib/cmake_install.cmake C$:/AeonX/build-release/dsa/cmake_install.cmake C$:/AeonX/build-release/optimizer/cmake_install.cmake C$:/AeonX/build-release/backend/cmake_install.cmake C$:/AeonX/build-release/frontend/cmake_install.cmake C$:/AeonX/build-release/package-manager/cmake_install.cmake C$:/AeonX/build-release/language-server/cmake_install.cmake C$:/AeonX/build-release/formatter/cmake_install.cmake C$:/AeonX/build-release/linter/cmake_install.cmake C$:/AeonX/build-release/debugger/cmake_install.cmake C$:/AeonX/build-release/ide/cmake_install.cmake C$:/AeonX/build-release/tests/cmake_install.cmake C$:/AeonX/build-release/tests/unit/cmake_install.cmake C$:/AeonX/build-release/examples/cmake_install.cmake C$:/AeonX/build-release/CTestTestfile.cmake C$:/AeonX/build-release/tests/CTestTestfile.cmake C$:/AeonX/build-release/tests/unit/CTestTestfile.cmake C$:/AeonX/build-release/examples/CTestTestfile.cmake: RERUN_CMAKE | C$:/AeonX/CMakeLists.txt C$:/AeonX/backend/CMakeLists.txt C$:/AeonX/cmake/CompilerWarnings.cmake C$:/AeonX/cmake/MycOptions.cmake C$:/AeonX/compiler/CMakeLists.txt C$:/AeonX/compiler/ast/CMakeLists.txt C$:/AeonX/compiler/cli/CMakeLists.txt C$:/AeonX/compiler/codegen/CMakeLists.txt C$:/AeonX/compiler/commands/CMakeLists.txt C$:/AeonX/compiler/common/CMakeLists.txt C$:/AeonX/compiler/config/CMakeLists.txt C$:/AeonX/compiler/diagnostics/CMakeLists.txt C$:/AeonX/compiler/driver/CMakeLists.txt C$:/AeonX/compiler/exitcodes/CMakeLists.txt C$:/AeonX/compiler/hir/CMakeLists.txt C$:/AeonX/compiler/ir/CMakeLists.txt C$:/AeonX/compiler/lexer/CMakeLists.txt C$:/AeonX/compiler/llvm/CMakeLists.txt C$:/AeonX/compiler/mir/CMakeLists.txt C$:/AeonX/compiler/parser/CMakeLists.txt C$:/AeonX/compiler/semantic/CMakeLists.txt C$:/AeonX/compiler/source/CMakeLists.txt C$:/AeonX/compiler/typechecker/CMakeLists.txt C$:/AeonX/debugger/CMakeLists.txt C$:/AeonX/dsa/CMakeLists.txt C$:/AeonX/examples/CMakeLists.txt C$:/AeonX/formatter/CMakeLists.txt C$:/AeonX/frontend/CMakeLists.txt C$:/AeonX/ide/CMakeLists.txt C$:/AeonX/language-server/CMakeLists.txt C$:/AeonX/linter/CMakeLists.txt C$:/AeonX/optimizer/CMakeLists.txt C$:/AeonX/package-manager/CMakeLists.txt C$:/AeonX/runtime/CMakeLists.txt C$:/AeonX/shared/CMakeLists.txt C$:/AeonX/shared/src/CMakeLists.txt C$:/AeonX/stdlib/CMakeLists.txt C$:/AeonX/tests/CMakeLists.txt C$:/AeonX/tests/unit/CMakeLists.txt C$:/msys64/mingw64/share/cmake/Modules/CMakeCXXInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeCommonLanguageInclude.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeGenericSystem.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeInitializeConfigs.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeLanguageInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeRCInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeSystemSpecificInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Internal/CMakeCXXLinkerInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/Linker/GNU-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Linker/GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Linker/GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Linker/Windows-GNU-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Linker/Windows-GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Clang-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Clang.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Initialize.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-windres.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/4.4.0/CMakeCXXCompiler.cmake CMakeFiles/4.4.0/CMakeRCCompiler.cmake CMakeFiles/4.4.0/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build C$:/AeonX/CMakeLists.txt C$:/AeonX/backend/CMakeLists.txt C$:/AeonX/cmake/CompilerWarnings.cmake C$:/AeonX/cmake/MycOptions.cmake C$:/AeonX/compiler/CMakeLists.txt C$:/AeonX/compiler/ast/CMakeLists.txt C$:/AeonX/compiler/codegen/CMakeLists.txt C$:/AeonX/compiler/config/CMakeLists.txt C$:/AeonX/compiler/diagnostics/CMakeLists.txt C$:/AeonX/compiler/driver/CMakeLists.txt C$:/AeonX/compiler/hir/CMakeLists.txt C$:/AeonX/compiler/ir/CMakeLists.txt C$:/AeonX/compiler/lexer/CMakeLists.txt C$:/AeonX/compiler/llvm/CMakeLists.txt C$:/AeonX/compiler/mir/CMakeLists.txt C$:/AeonX/compiler/parser/CMakeLists.txt C$:/AeonX/compiler/semantic/CMakeLists.txt C$:/AeonX/compiler/source/CMakeLists.txt C$:/AeonX/compiler/typechecker/CMakeLists.txt C$:/AeonX/debugger/CMakeLists.txt C$:/AeonX/dsa/CMakeLists.txt C$:/AeonX/examples/CMakeLists.txt C$:/AeonX/formatter/CMakeLists.txt C$:/AeonX/frontend/CMakeLists.txt C$:/AeonX/ide/CMakeLists.txt C$:/AeonX/language-server/CMakeLists.txt C$:/AeonX/linter/CMakeLists.txt C$:/AeonX/optimizer/CMakeLists.txt C$:/AeonX/package-manager/CMakeLists.txt C$:/AeonX/runtime/CMakeLists.txt C$:/AeonX/shared/CMakeLists.txt C$:/AeonX/shared/src/CMakeLists.txt C$:/AeonX/stdlib/CMakeLists.txt C$:/AeonX/tests/CMakeLists.txt C$:/AeonX/tests/unit/CMakeLists.txt C$:/msys64/mingw64/share/cmake/Modules/CMakeCXXCompiler.cmake.in C$:/msys64/mingw64/share/cmake/Modules/CMakeCXXCompilerABI.cpp C$:/msys64/mingw64/share/cmake/Modules/CMakeCXXInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeCommonLanguageInclude.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeCompilerIdDetection.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeDetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeDetermineCompilerABI.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeDetermineCompilerId.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeDetermineCompilerSupport.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeDetermineRCCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeDetermineSystem.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeFindBinUtils.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeGenericSystem.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeInitializeConfigs.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeLanguageInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeNinjaFindMake.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeParseImplicitIncludeInfo.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeParseImplicitLinkInfo.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeParseLibraryArchitecture.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeRCCompiler.cmake.in C$:/msys64/mingw64/share/cmake/Modules/CMakeRCInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeSystem.cmake.in C$:/msys64/mingw64/share/cmake/Modules/CMakeSystemSpecificInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeTestCXXCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeTestCompilerCommon.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeTestRCCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/ADSP-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/ARMCC-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/ARMClang-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/AppleClang-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Borland-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang-CXX-CXXImportStd.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang-DetermineCompilerInternal.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang-FindBinUtils.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Cray-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/CrayClang-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Diab-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Embarcadero-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Fujitsu-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/GHS-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/HP-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/IAR-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Intel-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/MSVC-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/NVHPC-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/NVIDIA-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/OrangeC-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/PGI-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/PathScale-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/PellesC-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Renesas-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/SCO-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/TI-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/TIClang-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Tasking-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Watcom-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/XL-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake C$:/msys64/mingw64/share/cmake/Modules/Internal/CMakeCXXLinkerInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/Internal/CMakeDetermineLinkerId.cmake C$:/msys64/mingw64/share/cmake/Modules/Internal/CMakeInspectCXXLinker.cmake C$:/msys64/mingw64/share/cmake/Modules/Internal/FeatureTesting.cmake C$:/msys64/mingw64/share/cmake/Modules/Linker/GNU-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Linker/GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Linker/GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Linker/Windows-GNU-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Linker/Windows-GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Clang-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Clang.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Determine-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Initialize.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-windres.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/4.4.0/CMakeCXXCompiler.cmake CMakeFiles/4.4.0/CMakeRCCompiler.cmake CMakeFiles/4.4.0/CMakeSystem.cmake: phony
+build C$:/AeonX/CMakeLists.txt C$:/AeonX/backend/CMakeLists.txt C$:/AeonX/cmake/CompilerWarnings.cmake C$:/AeonX/cmake/MycOptions.cmake C$:/AeonX/compiler/CMakeLists.txt C$:/AeonX/compiler/ast/CMakeLists.txt C$:/AeonX/compiler/cli/CMakeLists.txt C$:/AeonX/compiler/codegen/CMakeLists.txt C$:/AeonX/compiler/commands/CMakeLists.txt C$:/AeonX/compiler/common/CMakeLists.txt C$:/AeonX/compiler/config/CMakeLists.txt C$:/AeonX/compiler/diagnostics/CMakeLists.txt C$:/AeonX/compiler/driver/CMakeLists.txt C$:/AeonX/compiler/exitcodes/CMakeLists.txt C$:/AeonX/compiler/hir/CMakeLists.txt C$:/AeonX/compiler/ir/CMakeLists.txt C$:/AeonX/compiler/lexer/CMakeLists.txt C$:/AeonX/compiler/llvm/CMakeLists.txt C$:/AeonX/compiler/mir/CMakeLists.txt C$:/AeonX/compiler/parser/CMakeLists.txt C$:/AeonX/compiler/semantic/CMakeLists.txt C$:/AeonX/compiler/source/CMakeLists.txt C$:/AeonX/compiler/typechecker/CMakeLists.txt C$:/AeonX/debugger/CMakeLists.txt C$:/AeonX/dsa/CMakeLists.txt C$:/AeonX/examples/CMakeLists.txt C$:/AeonX/formatter/CMakeLists.txt C$:/AeonX/frontend/CMakeLists.txt C$:/AeonX/ide/CMakeLists.txt C$:/AeonX/language-server/CMakeLists.txt C$:/AeonX/linter/CMakeLists.txt C$:/AeonX/optimizer/CMakeLists.txt C$:/AeonX/package-manager/CMakeLists.txt C$:/AeonX/runtime/CMakeLists.txt C$:/AeonX/shared/CMakeLists.txt C$:/AeonX/shared/src/CMakeLists.txt C$:/AeonX/stdlib/CMakeLists.txt C$:/AeonX/tests/CMakeLists.txt C$:/AeonX/tests/unit/CMakeLists.txt C$:/msys64/mingw64/share/cmake/Modules/CMakeCXXInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeCommonLanguageInclude.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeGenericSystem.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeInitializeConfigs.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeLanguageInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeRCInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeSystemSpecificInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/Clang.cmake C$:/msys64/mingw64/share/cmake/Modules/Compiler/GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Internal/CMakeCXXLinkerInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/msys64/mingw64/share/cmake/Modules/Linker/GNU-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Linker/GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Linker/GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Linker/Windows-GNU-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Linker/Windows-GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Clang-CXX.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Clang.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-GNU.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-Initialize.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows-windres.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/Windows.cmake C$:/msys64/mingw64/share/cmake/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/4.4.0/CMakeCXXCompiler.cmake CMakeFiles/4.4.0/CMakeRCCompiler.cmake CMakeFiles/4.4.0/CMakeSystem.cmake: phony
 
 
 #############################################

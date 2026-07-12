@@ -1,99 +1,68 @@
 #include "myc/driver/command_dispatcher.hpp"
 
+#include "myc/commands/command_registry.hpp"
+#include "myc/exitcodes/exit_codes.hpp"
 #include "myc/logging/logger.hpp"
-#include "myc/version/version.hpp"
 
 #include <iostream>
 
 namespace myc::driver {
 
 CommandDispatcher::CommandDispatcher(config::CompilerConfig& config,
-                                   diagnostics::DiagnosticEngine& diagnostics,
-                                   source::SourceManager& source_manager)
-    : config_(config), diagnostics_(diagnostics), source_manager_(source_manager) {}
+                                     diagnostics::DiagnosticEngine& diagnostics,
+                                     source::SourceManager& source_manager)
+    : config_(config), diagnostics_(diagnostics), source_manager_(source_manager) {
+    commands::EnsureCommandsRegistered();
+}
 
-int CommandDispatcher::Dispatch(const CliOptions& options) {
+int CommandDispatcher::Dispatch(const cli::CliOptions& options) {
     if (options.show_help) {
-        std::cout << CliParser::GetUsage();
-        return 0;
+        if (const commands::AbstractCommand* help =
+                commands::CommandRegistry::Instance().Find("help")) {
+            return ExecuteCommand(*help, options);
+        }
     }
 
     if (options.show_version) {
-        std::cout << version::GetFullVersionString() << '\n';
-        return 0;
+        if (const commands::AbstractCommand* version =
+                commands::CommandRegistry::Instance().Find("version")) {
+            return ExecuteCommand(*version, options);
+        }
     }
 
     if (options.command.empty()) {
-        std::cerr << "error: no command specified\n"
-                  << "Run 'myc --help' for usage.\n";
-        return 2;
+        diagnostics_.EmitError("D0002", "no command specified; run 'myc --help' for usage");
+        return exitcodes::ToInt(exitcodes::ExitCode::InvalidArguments);
     }
 
-    if (options.command == "build") {
-        return RunBuild(options);
-    }
-    if (options.command == "run") {
-        return RunRun(options);
-    }
-    if (options.command == "fmt") {
-        return RunFmt(options);
-    }
-    if (options.command == "lint") {
-        return RunLint(options);
-    }
-    if (options.command == "benchmark") {
-        return RunBenchmark(options);
+    const commands::AbstractCommand* command =
+        commands::CommandRegistry::Instance().Find(options.command);
+    if (!command) {
+        diagnostics_.EmitError("D0003",
+                               "unknown command '" + options.command +
+                                   "'; run 'myc --help' for usage");
+        return exitcodes::ToInt(exitcodes::ExitCode::InvalidArguments);
     }
 
-    std::cerr << "error: unknown command '" << options.command << "'\n"
-              << "Run 'myc --help' for usage.\n";
-    return 2;
+    return ExecuteCommand(*command, options);
 }
 
-int CommandDispatcher::RunBuild(const CliOptions& options) {
-    logging::Logger::Instance().Info("build: compilation not yet implemented");
-    if (!options.source_files.empty()) {
-        for (const auto& file : options.source_files) {
-            logging::Logger::Instance().Info("  input: " + file);
-            (void)source_manager_.LoadFile(file);
-        }
-    }
-    (void)config_;
-    (void)diagnostics_;
-    return 0;
-}
+int CommandDispatcher::ExecuteCommand(const commands::AbstractCommand& command,
+                                      const cli::CliOptions& options) {
+    logging::Logger::Instance().Info("dispatching command: " + std::string(command.GetName()));
 
-int CommandDispatcher::RunRun(const CliOptions& options) {
-    logging::Logger::Instance().Info("run: execution not yet implemented");
-    if (!options.source_files.empty()) {
-        logging::Logger::Instance().Info("  entry: " + options.source_files.front());
-    }
-    (void)config_;
-    (void)diagnostics_;
-    (void)source_manager_;
-    return 0;
-}
+    const commands::CommandContext ctx{config_, diagnostics_, source_manager_, options};
+    const exitcodes::ExitCode exit_code = command.Execute(ctx);
 
-int CommandDispatcher::RunFmt(const CliOptions& options) {
-    logging::Logger::Instance().Info("fmt: formatter not yet implemented");
-    for (const auto& file : options.source_files) {
-        logging::Logger::Instance().Info("  file: " + file);
+    if (exit_code != exitcodes::ExitCode::Success) {
+        return exitcodes::ToInt(exit_code);
     }
-    return 0;
-}
 
-int CommandDispatcher::RunLint(const CliOptions& options) {
-    logging::Logger::Instance().Info("lint: linter not yet implemented");
-    for (const auto& file : options.source_files) {
-        logging::Logger::Instance().Info("  file: " + file);
+    if (diagnostics_.HasErrors()) {
+        return exitcodes::ToInt(exitcodes::ExitCode::GeneralError);
     }
-    return 0;
-}
 
-int CommandDispatcher::RunBenchmark(const CliOptions& options) {
-    logging::Logger::Instance().Info("benchmark: benchmarks not yet implemented");
-    (void)options;
-    return 0;
+    return exitcodes::ToInt(exitcodes::ExitCode::Success);
 }
 
 }  // namespace myc::driver

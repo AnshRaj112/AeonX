@@ -1,24 +1,47 @@
 # Compiler Driver
 
-The entry point for the `myc` executable. `CompilerDriver` parses CLI arguments,
-loads configuration, initializes diagnostics, and dispatches subcommands.
+The `myc` executable entry point. `CompilerDriver` owns configuration, diagnostics,
+source management, and delegates all command execution to `CommandDispatcher`.
 
-## Commands
+## Responsibilities
 
-| Command | Description |
-|---------|-------------|
-| `--help` | Print usage information |
-| `--version` | Print version information |
-| `build` | Compile `.myc` source files |
-| `run` | Build and execute a program |
-| `fmt` | Format source code |
-| `lint` | Run the linter |
-| `benchmark` | Run compiler benchmarks |
+- Parse CLI arguments via `myc::cli::CliParser`
+- Configure logging levels from global flags (`--verbose`, `--quiet`, `--trace`)
+- Load `CompilerConfig` from CLI options and environment variables
+- Initialize the diagnostic engine
+- Dispatch commands through the registry — never implement command logic directly
+- Catch all exceptions and convert them to diagnostics
+
+## CLI Flow
+
+```
+main()
+  └─ CompilerDriver::Run(argc, argv)
+       ├─ CliParser::Parse()           → Result<CliOptions>
+       ├─ ConfigureLogging()
+       ├─ LoadConfiguration()          → CompilerConfig from CLI
+       ├─ LoadEnvironmentOverrides()   → MYC_PROFILE, MYC_TARGET, ...
+       ├─ InitializeDiagnostics()
+       └─ CommandDispatcher::Dispatch()
+            ├─ --help    → HelpCommand
+            ├─ --version → VersionCommand
+            └─ <command> → CommandRegistry::Find() → AbstractCommand::Execute()
+```
+
+## Environment Variables
+
+| Variable | Effect |
+|----------|--------|
+| `MYC_PROFILE` | Override build profile (`debug`, `release`, ...) |
+| `MYC_TARGET` | Override target architecture (`x86_64`, `aarch64`, ...) |
+| `MYC_PLATFORM` | Override target platform (`linux`, `windows`, ...) |
+| `MYC_VERBOSE` | Enable debug logging when set to `1` or `true` |
 
 ## Exit Codes
 
-| Code | Meaning |
-|------|---------|
-| 0 | Success |
-| 1 | General error |
-| 2 | Invalid arguments |
+See `compiler/exitcodes/` for the centralized `ExitCode` enumeration.
+
+## Adding Future Commands
+
+Do **not** modify `CompilerDriver`. Register new commands in
+`compiler/commands/src/command_registry.cpp`. See `compiler/commands/README.md`.
