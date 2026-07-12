@@ -119,9 +119,12 @@ enum class TargetPlatform : std::uint8_t {
 /// Controls diagnostic emission behavior.
 struct DiagnosticConfiguration {
     bool warnings_as_errors{false};
+    bool suppress_warnings{false};
     bool show_notes{true};
     bool show_hints{true};
-    std::uint32_t error_limit{0};  // 0 = unlimited
+    bool error_recovery{true};
+    std::uint32_t max_diagnostics{0};  // 0 = unlimited
+    std::uint32_t error_limit{0};       // 0 = unlimited
     std::uint32_t warning_limit{0};
 };
 

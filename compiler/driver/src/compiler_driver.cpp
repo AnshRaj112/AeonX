@@ -1,6 +1,7 @@
 #include "myc/driver/compiler_driver.hpp"
 
 #include "myc/cli/cli_parser.hpp"
+#include "myc/diagnostics/diagnostic_reporter.hpp"
 #include "myc/exitcodes/exit_codes.hpp"
 #include "myc/logging/logger.hpp"
 #include "myc/version/version.hpp"
@@ -9,6 +10,12 @@
 #include <iostream>
 #include <optional>
 #include <string>
+
+#ifdef _WIN32
+#include <io.h>
+#else
+#include <unistd.h>
+#endif
 
 namespace myc::driver {
 
@@ -97,6 +104,35 @@ const char* GetEnv(std::string_view name) {
     return std::getenv(std::string(name).c_str());
 }
 
+bool IsColorEnabled(const cli::CliOptions& options) {
+    switch (options.color_mode) {
+        case cli::ColorMode::Always:
+            return true;
+        case cli::ColorMode::Never:
+            return false;
+        case cli::ColorMode::Auto:
+#ifdef _WIN32
+            return _isatty(_fileno(stderr)) != 0;
+#else
+            return isatty(fileno(stderr)) != 0;
+#endif
+    }
+    return false;
+}
+
+diagnostics::DiagnosticReporter::Options BuildReporterOptions(
+    const cli::CliOptions& options, const source::SourceManager& source_manager) {
+    diagnostics::DiagnosticReporter::Options reporter_options;
+    if (options.json_output || options.diagnostics_output) {
+        reporter_options.format = diagnostics::DiagnosticOutputFormat::Json;
+    } else {
+        reporter_options.format = diagnostics::DiagnosticOutputFormat::PlainText;
+    }
+    reporter_options.colors_enabled = IsColorEnabled(options);
+    reporter_options.source_manager = &source_manager;
+    return reporter_options;
+}
+
 }  // namespace
 
 CompilerDriver::CompilerDriver()
@@ -121,7 +157,9 @@ int CompilerDriver::Run(int argc, char* argv[]) {
         const int exit_code = dispatcher_.Dispatch(options);
 
         if (diagnostics_.HasErrors()) {
-            diagnostics_.PrintAll(std::cerr);
+            const diagnostics::DiagnosticReporter reporter(
+                BuildReporterOptions(options, source_manager_));
+            reporter.Report(diagnostics_, std::cerr);
         }
 
         logging::Logger::Instance().Info("compiler exiting with code " +
@@ -130,13 +168,15 @@ int CompilerDriver::Run(int argc, char* argv[]) {
     } catch (const std::exception& ex) {
         diagnostics_.Clear();
         diagnostics_.EmitError("D9999", std::string("internal compiler error: ") + ex.what());
-        diagnostics_.PrintAll(std::cerr);
+        const diagnostics::DiagnosticReporter reporter;
+        reporter.Report(diagnostics_, std::cerr);
         logging::Logger::Instance().Error(std::string("unhandled exception: ") + ex.what());
         return exitcodes::ToInt(exitcodes::ExitCode::InternalCompilerError);
     } catch (...) {
         diagnostics_.Clear();
         diagnostics_.EmitError("D9999", "internal compiler error: unknown exception");
-        diagnostics_.PrintAll(std::cerr);
+        const diagnostics::DiagnosticReporter reporter;
+        reporter.Report(diagnostics_, std::cerr);
         logging::Logger::Instance().Error("unhandled unknown exception");
         return exitcodes::ToInt(exitcodes::ExitCode::InternalCompilerError);
     }
@@ -243,13 +283,28 @@ void CompilerDriver::LoadEnvironmentOverrides() {
 
 void CompilerDriver::InitializeDiagnostics(const cli::CliOptions& options) {
     diagnostics_.Clear();
+
+    const config::DiagnosticConfiguration& cfg = config_.GetDiagnosticConfiguration();
+    diagnostics::DiagnosticsPolicy policy{
+        .warnings_as_errors = cfg.warnings_as_errors,
+        .suppress_warnings = cfg.suppress_warnings,
+        .show_notes = cfg.show_notes,
+        .show_hints = cfg.show_hints,
+        .error_recovery = cfg.error_recovery,
+        .max_diagnostics = cfg.max_diagnostics,
+        .error_limit = cfg.error_limit,
+        .warning_limit = cfg.warning_limit,
+    };
+    diagnostics_.SetPolicy(policy);
+
     (void)options;
     logging::Logger::Instance().Debug("diagnostics engine initialized");
 }
 
 int CompilerDriver::HandleParseError(const std::string& message) {
     diagnostics_.EmitError("D0001", message);
-    diagnostics_.PrintAll(std::cerr);
+    const diagnostics::DiagnosticReporter reporter;
+    reporter.Report(diagnostics_, std::cerr);
     logging::Logger::Instance().Error("CLI parse error: " + message);
     return exitcodes::ToInt(exitcodes::ExitCode::InvalidArguments);
 }
