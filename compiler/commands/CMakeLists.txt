@@ -3,6 +3,7 @@ add_library(myc_commands STATIC
     src/command_registry.cpp
     src/help_command.cpp
     src/placeholder_command.cpp
+    src/tokens_command.cpp
     src/version_command.cpp
 )
 
@@ -18,6 +19,7 @@ target_link_libraries(myc_commands
         myc_config
         myc_diagnostics
         myc_exitcodes
+        myc_lexer
         myc_source
         myc_shared
 )

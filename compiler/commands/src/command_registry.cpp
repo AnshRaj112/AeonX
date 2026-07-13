@@ -3,6 +3,7 @@
 #include "myc/commands/builtin_commands.hpp"
 #include "myc/commands/help_command.hpp"
 #include "myc/commands/placeholder_command.hpp"
+#include "myc/commands/tokens_command.hpp"
 #include "myc/commands/version_command.hpp"
 
 #include <algorithm>
@@ -91,9 +92,7 @@ void CommandRegistry::RegisterBuiltInCommands() {
         "ast", "Dump abstract syntax trees for debugging", "myc ast <file.myc>",
         "parser and AST dumping"));
 
-    Register(std::make_unique<PlaceholderCommand>(
-        "tokens", "Dump lexer token streams for debugging", "myc tokens <file.myc>",
-        "lexer token dumping"));
+    Register(std::make_unique<TokensCommand>());
 
     Register(std::make_unique<PlaceholderCommand>(
         "ir", "Dump intermediate representation", "myc ir <file.myc>",
