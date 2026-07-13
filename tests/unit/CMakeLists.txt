@@ -1,8 +1,10 @@
 add_executable(myc_tests
     myc_test_main.cpp
+    test_character_stream.cpp
     test_config.cpp
     test_diagnostics.cpp
     test_lexer.cpp
+    test_lexer_infrastructure.cpp
     test_source.cpp
     test_version.cpp
     test_cli.cpp

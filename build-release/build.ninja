@@ -255,7 +255,7 @@ build cmake_object_order_depends_target_myc_shared: phony || .
 
 build shared/src/CMakeFiles/myc_shared.dir/logging/logger.cpp.obj: CXX_COMPILER__myc_shared_unscanned_Debug C$:/AeonX/shared/src/logging/logger.cpp || cmake_object_order_depends_target_myc_shared
   CONFIG = Debug
-  DEFINES = -DMYC_BUILD_DATE="\"2026-07-12 12:35:48\""
+  DEFINES = -DMYC_BUILD_DATE="\"2026-07-12 13:36:47\""
   DEP_FILE = shared\src\CMakeFiles\myc_shared.dir\logging\logger.cpp.obj.d
   FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/shared/src/../include
@@ -265,7 +265,7 @@ build shared/src/CMakeFiles/myc_shared.dir/logging/logger.cpp.obj: CXX_COMPILER_
 
 build shared/src/CMakeFiles/myc_shared.dir/version/version_info.cpp.obj: CXX_COMPILER__myc_shared_unscanned_Debug C$:/AeonX/shared/src/version/version_info.cpp || cmake_object_order_depends_target_myc_shared
   CONFIG = Debug
-  DEFINES = -DMYC_BUILD_DATE="\"2026-07-12 12:35:48\""
+  DEFINES = -DMYC_BUILD_DATE="\"2026-07-12 13:36:47\""
   DEP_FILE = shared\src\CMakeFiles\myc_shared.dir\version\version_info.cpp.obj.d
   FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/shared/src/../include
@@ -1434,9 +1434,135 @@ build compiler/source/install/strip: phony compiler/source/CMakeFiles/install/st
 
 build cmake_object_order_depends_target_myc_lexer: phony || cmake_object_order_depends_target_myc_common cmake_object_order_depends_target_myc_config cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_shared
 
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/character_reader.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/character_reader.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
+  DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\character_reader.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
+  OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+  OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
+  TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/character_stream.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/character_stream.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
+  DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\character_stream.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
+  OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+  OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
+  TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/keyword.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/keyword.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
+  DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\keyword.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
+  OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+  OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
+  TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/lexer.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
+  DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\lexer.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
+  OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+  OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
+  TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_configuration.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/lexer_configuration.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
+  DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\lexer_configuration.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
+  OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+  OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
+  TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_context.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/lexer_context.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
+  DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\lexer_context.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
+  OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+  OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
+  TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+
 build compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_module.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/lexer_module.cpp || cmake_object_order_depends_target_myc_lexer
   CONFIG = Debug
   DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\lexer_module.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
+  OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+  OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
+  TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_statistics.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/lexer_statistics.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
+  DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\lexer_statistics.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
+  OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+  OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
+  TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/operator.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/operator.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
+  DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\operator.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
+  OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+  OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
+  TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/scanner_registry.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/scanner_registry.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
+  DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\scanner_registry.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
+  OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+  OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
+  TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/token_category_map.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/token_category_map.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
+  DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\token_category_map.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
+  OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+  OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
+  TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/token_factory.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/token_factory.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
+  DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\token_factory.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
+  OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+  OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
+  TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/token_printer.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/token_printer.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
+  DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\token_printer.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
+  OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+  OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
+  TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/token_stream.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/token_stream.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
+  DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\token_stream.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
+  OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+  OBJECT_FILE_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir\src
+  TARGET_SUPPORT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
+
+build compiler/lexer/CMakeFiles/myc_lexer.dir/src/token_type.cpp.obj: CXX_COMPILER__myc_lexer_unscanned_Debug C$:/AeonX/compiler/lexer/src/token_type.cpp || cmake_object_order_depends_target_myc_lexer
+  CONFIG = Debug
+  DEP_FILE = compiler\lexer\CMakeFiles\myc_lexer.dir\src\token_type.cpp.obj.d
   FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
   INCLUDES = -IC:/AeonX/compiler/lexer/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include
   OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
@@ -1451,7 +1577,7 @@ build compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_module.cpp.obj: CXX_COMP
 #############################################
 # Link the static library compiler\lexer\libmyc_lexer.a
 
-build compiler/lexer/libmyc_lexer.a: CXX_STATIC_LIBRARY_LINKER__myc_lexer_Debug compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_module.cpp.obj || compiler/common/libmyc_common.a compiler/config/libmyc_config.a compiler/diagnostics/libmyc_diagnostics.a shared/src/libmyc_shared.a
+build compiler/lexer/libmyc_lexer.a: CXX_STATIC_LIBRARY_LINKER__myc_lexer_Debug compiler/lexer/CMakeFiles/myc_lexer.dir/src/character_reader.cpp.obj compiler/lexer/CMakeFiles/myc_lexer.dir/src/character_stream.cpp.obj compiler/lexer/CMakeFiles/myc_lexer.dir/src/keyword.cpp.obj compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer.cpp.obj compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_configuration.cpp.obj compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_context.cpp.obj compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_module.cpp.obj compiler/lexer/CMakeFiles/myc_lexer.dir/src/lexer_statistics.cpp.obj compiler/lexer/CMakeFiles/myc_lexer.dir/src/operator.cpp.obj compiler/lexer/CMakeFiles/myc_lexer.dir/src/scanner_registry.cpp.obj compiler/lexer/CMakeFiles/myc_lexer.dir/src/token_category_map.cpp.obj compiler/lexer/CMakeFiles/myc_lexer.dir/src/token_factory.cpp.obj compiler/lexer/CMakeFiles/myc_lexer.dir/src/token_printer.cpp.obj compiler/lexer/CMakeFiles/myc_lexer.dir/src/token_stream.cpp.obj compiler/lexer/CMakeFiles/myc_lexer.dir/src/token_type.cpp.obj || compiler/common/libmyc_common.a compiler/config/libmyc_config.a compiler/diagnostics/libmyc_diagnostics.a shared/src/libmyc_shared.a
   CONFIG = Debug
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = compiler\lexer\CMakeFiles\myc_lexer.dir
@@ -4261,13 +4387,22 @@ build tests/install/strip: phony tests/CMakeFiles/install/strip.util
 #############################################
 # Order-only phony target for myc_tests
 
-build cmake_object_order_depends_target_myc_tests: phony || cmake_object_order_depends_target_myc_cli cmake_object_order_depends_target_myc_commands cmake_object_order_depends_target_myc_common cmake_object_order_depends_target_myc_config cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_driver cmake_object_order_depends_target_myc_shared
+build cmake_object_order_depends_target_myc_tests: phony || cmake_object_order_depends_target_myc_cli cmake_object_order_depends_target_myc_commands cmake_object_order_depends_target_myc_common cmake_object_order_depends_target_myc_config cmake_object_order_depends_target_myc_diagnostics cmake_object_order_depends_target_myc_driver cmake_object_order_depends_target_myc_lexer cmake_object_order_depends_target_myc_shared
 
 build tests/unit/CMakeFiles/myc_tests.dir/myc_test_main.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Debug C$:/AeonX/tests/unit/myc_test_main.cpp || cmake_object_order_depends_target_myc_tests
   CONFIG = Debug
   DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\myc_test_main.cpp.obj.d
   FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/lexer/include
+  OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
+  OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
+  TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
+
+build tests/unit/CMakeFiles/myc_tests.dir/test_character_stream.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Debug C$:/AeonX/tests/unit/test_character_stream.cpp || cmake_object_order_depends_target_myc_tests
+  CONFIG = Debug
+  DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\test_character_stream.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/lexer/include
   OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
   OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
   TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
@@ -4276,7 +4411,7 @@ build tests/unit/CMakeFiles/myc_tests.dir/test_config.cpp.obj: CXX_COMPILER__myc
   CONFIG = Debug
   DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\test_config.cpp.obj.d
   FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/lexer/include
   OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
   OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
   TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
@@ -4285,7 +4420,25 @@ build tests/unit/CMakeFiles/myc_tests.dir/test_diagnostics.cpp.obj: CXX_COMPILER
   CONFIG = Debug
   DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\test_diagnostics.cpp.obj.d
   FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/lexer/include
+  OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
+  OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
+  TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
+
+build tests/unit/CMakeFiles/myc_tests.dir/test_lexer.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Debug C$:/AeonX/tests/unit/test_lexer.cpp || cmake_object_order_depends_target_myc_tests
+  CONFIG = Debug
+  DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\test_lexer.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/lexer/include
+  OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
+  OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
+  TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
+
+build tests/unit/CMakeFiles/myc_tests.dir/test_lexer_infrastructure.cpp.obj: CXX_COMPILER__myc_tests_unscanned_Debug C$:/AeonX/tests/unit/test_lexer_infrastructure.cpp || cmake_object_order_depends_target_myc_tests
+  CONFIG = Debug
+  DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\test_lexer_infrastructure.cpp.obj.d
+  FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/lexer/include
   OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
   OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
   TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
@@ -4294,7 +4447,7 @@ build tests/unit/CMakeFiles/myc_tests.dir/test_source.cpp.obj: CXX_COMPILER__myc
   CONFIG = Debug
   DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\test_source.cpp.obj.d
   FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/lexer/include
   OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
   OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
   TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
@@ -4303,7 +4456,7 @@ build tests/unit/CMakeFiles/myc_tests.dir/test_version.cpp.obj: CXX_COMPILER__my
   CONFIG = Debug
   DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\test_version.cpp.obj.d
   FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/lexer/include
   OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
   OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
   TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
@@ -4312,7 +4465,7 @@ build tests/unit/CMakeFiles/myc_tests.dir/test_cli.cpp.obj: CXX_COMPILER__myc_te
   CONFIG = Debug
   DEP_FILE = tests\unit\CMakeFiles\myc_tests.dir\test_cli.cpp.obj.d
   FLAGS = -g -std=c++23 -Wall -Wextra -Wpedantic -Werror -Wshadow -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2
-  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include
+  INCLUDES = -IC:/AeonX/tests/unit -IC:/AeonX/compiler/driver/include -IC:/AeonX/compiler/cli/include -IC:/AeonX/compiler/common/include -IC:/AeonX/compiler/config/include -IC:/AeonX/shared/src/../include -IC:/AeonX/compiler/exitcodes/include -IC:/AeonX/compiler/commands/include -IC:/AeonX/compiler/diagnostics/include -IC:/AeonX/compiler/source/include -IC:/AeonX/compiler/lexer/include
   OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
   OBJECT_FILE_DIR = tests\unit\CMakeFiles\myc_tests.dir
   TARGET_SUPPORT_DIR = tests\unit\CMakeFiles\myc_tests.dir
@@ -4325,10 +4478,10 @@ build tests/unit/CMakeFiles/myc_tests.dir/test_cli.cpp.obj: CXX_COMPILER__myc_te
 #############################################
 # Link the executable tests\unit\myc_tests.exe
 
-build tests/unit/myc_tests.exe: CXX_EXECUTABLE_LINKER__myc_tests_Debug tests/unit/CMakeFiles/myc_tests.dir/myc_test_main.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_config.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_diagnostics.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_source.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_version.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_cli.cpp.obj | compiler/driver/libmyc_driver.a compiler/commands/libmyc_commands.a compiler/cli/libmyc_cli.a shared/src/libmyc_shared.a compiler/diagnostics/libmyc_diagnostics.a compiler/source/libmyc_source.a compiler/diagnostics/libmyc_diagnostics.a compiler/source/libmyc_source.a compiler/common/libmyc_common.a compiler/config/libmyc_config.a shared/src/libmyc_shared.a || compiler/cli/libmyc_cli.a compiler/commands/libmyc_commands.a compiler/common/libmyc_common.a compiler/config/libmyc_config.a compiler/diagnostics/libmyc_diagnostics.a compiler/driver/libmyc_driver.a shared/src/libmyc_shared.a
+build tests/unit/myc_tests.exe: CXX_EXECUTABLE_LINKER__myc_tests_Debug tests/unit/CMakeFiles/myc_tests.dir/myc_test_main.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_character_stream.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_config.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_diagnostics.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_lexer.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_lexer_infrastructure.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_source.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_version.cpp.obj tests/unit/CMakeFiles/myc_tests.dir/test_cli.cpp.obj | compiler/driver/libmyc_driver.a compiler/commands/libmyc_commands.a compiler/cli/libmyc_cli.a compiler/lexer/libmyc_lexer.a shared/src/libmyc_shared.a compiler/diagnostics/libmyc_diagnostics.a compiler/source/libmyc_source.a compiler/diagnostics/libmyc_diagnostics.a compiler/source/libmyc_source.a compiler/common/libmyc_common.a compiler/config/libmyc_config.a shared/src/libmyc_shared.a || compiler/cli/libmyc_cli.a compiler/commands/libmyc_commands.a compiler/common/libmyc_common.a compiler/config/libmyc_config.a compiler/diagnostics/libmyc_diagnostics.a compiler/driver/libmyc_driver.a compiler/lexer/libmyc_lexer.a shared/src/libmyc_shared.a
   CONFIG = Debug
   FLAGS = -g
-  LINK_LIBRARIES = compiler/driver/libmyc_driver.a  compiler/commands/libmyc_commands.a  compiler/cli/libmyc_cli.a  shared/src/libmyc_shared.a  compiler/diagnostics/libmyc_diagnostics.a  compiler/source/libmyc_source.a  compiler/diagnostics/libmyc_diagnostics.a  compiler/source/libmyc_source.a  compiler/common/libmyc_common.a  compiler/config/libmyc_config.a  shared/src/libmyc_shared.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = compiler/driver/libmyc_driver.a  compiler/commands/libmyc_commands.a  compiler/cli/libmyc_cli.a  compiler/lexer/libmyc_lexer.a  shared/src/libmyc_shared.a  compiler/diagnostics/libmyc_diagnostics.a  compiler/source/libmyc_source.a  compiler/diagnostics/libmyc_diagnostics.a  compiler/source/libmyc_source.a  compiler/common/libmyc_common.a  compiler/config/libmyc_config.a  shared/src/libmyc_shared.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = tests\unit\CMakeFiles\myc_tests.dir
   POST_BUILD = cd .
   PRE_LINK = cd .

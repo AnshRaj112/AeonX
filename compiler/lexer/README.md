@@ -1,11 +1,10 @@
-# Lexer Module — Token System
+# Lexer Module — Character Stream and Lexer Infrastructure
 
-The lexer module provides the lexical token infrastructure for the Myc compiler.
-This layer defines the immutable data structures that the lexer will populate and
-that every downstream phase (parser, semantic analysis, formatter, language server)
-will consume.
+The lexer module provides the character streaming layer and modular lexer framework
+for the Myc compiler. Token data structures (`Token`, `TokenStream`, `TokenFactory`,
+keyword/operator tables) are fully implemented; **lexical classification is not**.
 
-Lexical analysis itself is **not** implemented here — only the token architecture.
+This document covers the infrastructure beneath token generation.
 
 ## Architecture
 
@@ -13,107 +12,173 @@ Lexical analysis itself is **not** implemented here — only the token architect
 SourceBuffer
      │
      ▼
-Lexer (future) ──► TokenFactory ──► Token
-                         │              │
-                         │         SourceLocation / SourceSpan
-                         ▼
-                   TokenStream ──► TokenIterator
-                         │
-                         ▼
-                   Parser (future)
+CharacterReader ──► CharacterStream ──► Character
+     │                      │
+     │                      ▼
+SourceManager          Lexer (coordinator)
+     │                      │
+     │                      ├── LexerContext
+     │                      ├── LexerConfiguration / LexerOptions
+     │                      ├── LexerStatistics
+     │                      └── ScannerRegistry
+     │                              │
+     │                              ▼
+     │                    IScanner implementations
+     │                    (placeholders today)
+     │                              │
+     ▼                              ▼
+DiagnosticEmitter            TokenFactory ──► Token ──► TokenStream
 ```
 
-### Supporting tables
+## CharacterStream
+
+`CharacterStream` reads Unicode scalar values from a `SourceBuffer` without producing
+tokens. It delegates location resolution to `SourceManager` via `CharacterReader`.
+
+### API
+
+| Method | Description |
+|--------|-------------|
+| `Peek(offset)` | Look ahead by code-point offset (0 = current) |
+| `Current()` | Alias for `Peek(0)` |
+| `Previous()` | Character before the cursor |
+| `Advance()` / `Next()` | Consume and return the current character |
+| `Eof()` | True when the cursor is at end-of-input |
+| `Position()` | Current byte offset |
+| `Rewind(n)` | Move backward by *n* code points |
+| `Mark()` / `Reset(mark)` | Save and restore byte offset |
+| `Slice(start, end)` | Half-open byte slice into the buffer |
+
+### Character metadata
+
+Each `Character` exposes:
+
+- Unicode scalar value (`char32_t`)
+- Byte offset
+- Line and column (from `SourceManager`)
+- `source::SourceLocation`
+- `FutureUnicodeSupport` (UTF-16/UTF-32 column placeholders)
+
+UTF-8 decoding uses `DecodeUtf8()`. Invalid sequences yield U+FFFD and advance one
+byte so scanning can recover.
+
+## Lexer coordinator
+
+`Lexer` is a thin coordinator. It does **not** embed tokenization rules.
+
+Responsibilities:
+
+1. Own a `CharacterStream` over the input buffer
+2. Build a `LexerContext` shared with scanners
+3. Run the scan loop, dispatching `ScannerRegistry`
+4. Recover from unknown input without stopping (when configured)
+5. Append a terminating `EOF` token
+6. Return `LexerResult` with `TokenStream` and `LexerStatistics`
+
+### LexerContext
+
+Mutable per-pass state:
+
+- Reference to `CharacterStream`
+- `LexerState` (Normal, InsideString, InsideComment, …)
+- Pending tokens produced by scanners
+- Error flag
+- References to `SourceManager`, `DiagnosticEmitter`, configuration, statistics
+
+### LexerState
+
+| State | Purpose |
+|-------|---------|
+| `Normal` | Default scanning |
+| `InsideString` | String literal bodies |
+| `InsideComment` | Block/line comment bodies |
+| `InsideDirective` | Preprocessor-style directives |
+| `FutureInterpolation` | String interpolation (reserved) |
+| `FutureRawString` | Raw string literals (reserved) |
+
+### Configuration
+
+`LexerOptions` → `LexerConfiguration` controls statistics collection, error recovery,
+whitespace/trivia handling, and directive/annotation enablement.
+
+`FutureIncrementalLexing` on `LexerConfiguration` reserves fields for IDE
+re-lexing of edited regions.
+
+## Scanner architecture
+
+Scanners implement `IScanner` with a single `Scan(LexerContext&)` method returning
+`ScanResult`:
+
+| Result | Meaning |
+|--------|---------|
+| `TokenProduced` | One or more tokens pushed to context |
+| `Consumed` | Input consumed, no token (e.g. whitespace) |
+| `NotHandled` | Try the next scanner |
+| `Error` | Recoverable lexical error |
+
+### Placeholder scanners
+
+Registered in priority order by `ScannerRegistry`:
+
+1. `WhitespaceScanner`
+2. `CommentScanner`
+3. `DirectiveScanner`
+4. `AnnotationScanner`
+5. `StringScanner`
+6. `CharacterScanner`
+7. `NumberScanner`
+8. `IdentifierScanner`
+9. `KeywordScanner`
+10. `OperatorScanner`
+11. `UnknownScanner`
+
+All return `NotHandled` today. Future implementations will live in dedicated
+translation units without changing the coordinator.
+
+## Future tokenization flow
 
 ```
-KeywordTable ──► Keyword { text, TokenType, reserved, version, feature_gate }
-OperatorTable ──► Operator { symbol, precedence, associativity, arity }
+loop until EOF:
+    dispatch scanners in order
+    if TokenProduced → flush tokens to output vector
+    if Consumed       → continue
+    if Error          → emit diagnostic + error token, recover
+    if NotHandled     → advance one code point, emit recoverable error token
+append EOF token
+wrap in TokenStream
 ```
 
-## Core types
+Keyword and operator classification will use `KeywordTable` and `OperatorTable`.
+Lexemes remain `string_view` slices into the `SourceBuffer`.
 
-| Type | Responsibility |
-|------|----------------|
-| `Token` | Immutable lexical unit with type, lexeme, location, span, flags, and category |
-| `TokenType` | Comprehensive `enum class` covering identifiers, keywords, literals, operators, punctuation, delimiters, directives, and trivia |
-| `TokenCategory` | Higher-level grouping to simplify parser dispatch |
-| `TokenFlags` | Bit flags for trivia, macro expansion, invalid tokens, and lexer metadata |
-| `LiteralKind` | Discriminates integer, float, string, and future interpolated literal forms |
-| `Keyword` / `KeywordTable` | Centralized keyword database with binary-search lookup |
-| `Operator` / `OperatorTable` | Operator precedence, associativity, and arity metadata |
-| `TokenFactory` | Sole construction path for immutable `Token` values |
-| `TokenStream` | Navigable, shareable token sequence with peek/consume/checkpoint support |
-| `TokenIterator` | STL random-access iterator for range-based loops |
-| `TokenPrinter` | Human-readable debug output (`Identifier("count")`, `EOF`, etc.) |
-| `FutureTrivia` | Placeholder for leading/trailing trivia attachment |
-| `FutureMacroToken` | Placeholder for macro expansion provenance |
-| `FutureSemanticValue` | Placeholder for parsed literal semantic values |
+## Error recovery
 
-## Design decisions
+The lexer **never stops after the first error** when `continue_after_errors` is
+enabled (default). Unrecognized input advances one code point, emits a
+`TokenType::Error` token with `TokenFlags::Recoverable`, and continues scanning.
 
-**Immutable tokens.** Tokens are constructed exclusively through `TokenFactory` and
-cannot be modified afterward. Lexemes are stored as `std::string_view` slices into
-the source buffer, avoiding per-token heap allocations.
+## Statistics
 
-**Grouped `TokenType` values.** Enumerators are allocated in reserved numeric ranges
-per category (keywords 100–199, literals 300–319, operators 400–549, etc.) so new
-language constructs can be added without renumbering existing values.
+`LexerStatistics` tracks:
 
-**Separated navigation from storage.** `TokenStream` stores tokens in a
-`shared_ptr`-backed immutable vector. Multiple streams can share the same storage
-via `Share()` while maintaining independent cursor positions — enabling future
-parallel compiler stages to read tokens concurrently.
+- Characters read
+- Lines processed
+- Scanner invocations
+- Tokens produced
+- Errors encountered
+- Elapsed wall time (`std::chrono::steady_clock`)
+- Memory usage placeholder (`GetMemoryUsageBytes`)
 
-**Centralized lookup tables.** Keywords and operators live in sorted `constexpr`
-arrays with `std::lower_bound` lookup. This avoids hash maps, keeps tables in
-read-only memory, and supports millions of lookups with predictable performance.
+## Performance considerations
 
-**Category derivation.** `GetCategory(TokenType)` maps every `TokenType` to a
-`TokenCategory` at construction time and caches the result on the token, so the
-parser can branch on coarse categories without repeated range checks.
-
-## Relationships
-
-### Token ↔ Source Manager
-
-Every token carries a `source::SourceLocation` (start position) and
-`source::SourceSpan` (half-open byte range). The lexeme `string_view` points into
-the owning `SourceBuffer` text, so tokens remain valid as long as the buffer lives.
-
-### Token ↔ Lexer (future)
-
-The lexer will:
-1. Scan characters from `SourceBuffer`
-2. Classify lexemes using `KeywordTable` and `OperatorTable`
-3. Construct tokens via `TokenFactory`
-4. Append them to a `std::vector<Token>` and wrap in `TokenStream`
-
-### Token ↔ Parser (future)
-
-The parser will:
-1. Receive a `TokenStream` from the lexer
-2. Use `Peek()` / `Consume()` / `SaveCheckpoint()` for speculative parsing
-3. Branch on `TokenCategory` and `TokenType`
-4. Consult `OperatorTable` for expression precedence parsing
-
-### Token ↔ Diagnostics
-
-Lexer errors will create `TokenType::Error` tokens with `TokenFlags::Invalid`.
-Diagnostic emission converts `source::SourceSpan` to `diagnostics::SourceSpan`
-via the source manager (bridge to be implemented with the lexer).
-
-## Future extensions
-
-| Extension | Hook |
-|-----------|------|
-| Trivia attachment | `FutureTrivia` on `Token`, `TokenFlags::HasLeadingTrivia` |
-| Macro expansion | `FutureMacroToken`, `TokenFlags::FromMacroExpansion` |
-| Parsed literal values | `FutureSemanticValue` |
-| Interpolated strings | `LiteralKind::InterpolatedString` |
-| User-defined operators | `Operator::overload_set_id` |
-| Feature-gated keywords | `Keyword::feature_gate`, `Keyword::language_version` |
-| Incremental re-lexing | `TokenStream::Share()` + immutable token vectors |
-| Parser checkpoints | `SaveCheckpoint()` / `RestoreCheckpoint()` |
+- **Zero-copy lexemes:** characters and future tokens slice `SourceBuffer` text
+- **Line table reuse:** line/column lookups use precomputed `LineTable` data
+- **Minimal allocation:** `CharacterStream` holds only a cursor; token vector
+  reserved at scan start
+- **Cache-friendly tables:** keyword/operator lookup remains sorted-array binary
+  search (read-only)
+- **Streaming:** `CharacterReader` is a non-owning view; large files are not copied
+- **UTF-8:** code points decoded on demand; ASCII fast path is a single byte
 
 ## Building and testing
 
@@ -123,10 +188,18 @@ cmake --build build --target myc_tests
 ctest --test-dir build -R myc_unit_tests --output-on-failure
 ```
 
-Unit tests live in `tests/unit/test_lexer.cpp`.
+Unit tests:
+
+- `tests/unit/test_character_stream.cpp` — stream navigation, UTF-8, slices
+- `tests/unit/test_lexer_infrastructure.cpp` — lexer init, statistics, recovery
+- `tests/unit/test_lexer.cpp` — token system (existing)
 
 ## Status
 
-Token infrastructure: **implemented**
-
-Lexer (character scanning): **pending**
+| Component | Status |
+|-----------|--------|
+| Token system | Implemented |
+| CharacterStream | Implemented |
+| Lexer framework | Implemented |
+| Scanner placeholders | Architecture only |
+| Tokenization rules | Pending |
