@@ -66,8 +66,8 @@ constexpr std::array kKeywords = {
     MakeKeyword("sizeof", TokenType::KwSizeof),
     MakeKeyword("static", TokenType::KwStatic),
     MakeKeyword("str", TokenType::TyStr),
-    MakeKeyword("struct", TokenType::KwStruct),
     MakeKeyword("string", TokenType::TyString),
+    MakeKeyword("struct", TokenType::KwStruct),
     MakeKeyword("super", TokenType::KwSuper),
     MakeKeyword("throw", TokenType::KwThrow),
     MakeKeyword("true", TokenType::KwTrue),
@@ -87,6 +87,11 @@ constexpr std::array kKeywords = {
     MakeKeyword("xor", TokenType::KwXor),
     MakeKeyword("yield", TokenType::KwYield),
 };
+
+static_assert(
+    std::is_sorted(kKeywords.begin(), kKeywords.end(),
+                   [](const Keyword& lhs, const Keyword& rhs) { return lhs.text < rhs.text; }),
+    "keyword table must remain lexicographically sorted");
 
 }  // namespace
 

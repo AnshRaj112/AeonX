@@ -52,8 +52,6 @@ LexerResult Lexer::Tokenize() {
             if (!configuration_.ShouldContinueAfterErrors()) {
                 break;
             }
-            RecoverFromUnknownCharacter(context);
-            FlushPendingTokens(context, tokens);
             continue;
         }
 
@@ -101,7 +99,7 @@ void Lexer::RecoverFromUnknownCharacter(LexerContext& context) {
 
     (void)context.GetDiagnostics().EmitError(
         diagnostics::ErrorCode{"MYC0001"},
-        std::string("unexpected character in lexical analysis (infrastructure pass)"));
+        std::string("unexpected character in lexical analysis"));
 
     if (configuration_.ShouldContinueAfterErrors()) {
         context.PushToken(TokenFactory::MakeError(reader_.Slice(start, end), location, span,

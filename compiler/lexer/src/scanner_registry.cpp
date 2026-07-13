@@ -22,8 +22,8 @@ ScannerRegistry::ScannerRegistry() {
     RegisterScanner(std::make_unique<StringScanner>());
     RegisterScanner(std::make_unique<CharacterScanner>());
     RegisterScanner(std::make_unique<NumberScanner>());
-    RegisterScanner(std::make_unique<IdentifierScanner>());
     RegisterScanner(std::make_unique<KeywordScanner>());
+    RegisterScanner(std::make_unique<IdentifierScanner>());
     RegisterScanner(std::make_unique<OperatorScanner>());
     RegisterScanner(std::make_unique<UnknownScanner>());
 }

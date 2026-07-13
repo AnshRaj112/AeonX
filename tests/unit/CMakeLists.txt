@@ -5,6 +5,8 @@ add_executable(myc_tests
     test_diagnostics.cpp
     test_lexer.cpp
     test_lexer_infrastructure.cpp
+    test_lexer_production.cpp
+    test_lexer_debug.cpp
     test_source.cpp
     test_version.cpp
     test_cli.cpp

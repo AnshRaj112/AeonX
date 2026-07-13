@@ -37,11 +37,13 @@ MYC_TEST(lexer_tokenize_infrastructure_pass) {
 
     const myc::lexer::LexerResult result = lexer.Tokenize();
     MYC_ASSERT(!result.tokens.Empty());
-    MYC_ASSERT(result.tokens.Peek().IsEOF() == false || result.tokens.Size() > 1);
+    MYC_ASSERT(result.tokens.Peek().Is(myc::lexer::TokenType::Identifier));
+    MYC_ASSERT(result.tokens.Peek(1).IsEOF());
 
     const auto& stats = result.statistics;
     MYC_ASSERT(stats.GetScannerCalls() > 0u);
     MYC_ASSERT(stats.GetElapsedTime().count() >= 0);
+    MYC_ASSERT(!result.had_errors);
 }
 
 MYC_TEST(lexer_statistics_collection) {
@@ -49,7 +51,7 @@ MYC_TEST(lexer_statistics_collection) {
     myc::diagnostics::DiagnosticEngine engine;
     myc::diagnostics::DiagnosticEmitter emitter(engine);
 
-    const myc::FileId id = source_manager.AddMemoryBuffer("stats.myc", "ab\n");
+    const myc::FileId id = source_manager.AddMemoryBuffer("stats.myc", "a b\n");
     const myc::source::SourceBuffer* buffer = source_manager.GetBuffer(id);
     MYC_ASSERT(buffer != nullptr);
 
@@ -58,10 +60,10 @@ MYC_TEST(lexer_statistics_collection) {
     myc::lexer::Lexer lexer(*buffer, source_manager, emitter, options);
 
     const myc::lexer::LexerResult result = lexer.Tokenize();
-    MYC_ASSERT(result.statistics.GetCharactersRead() >= 3u);
-    MYC_ASSERT(result.statistics.GetErrorsEncountered() >= 3u);
-    MYC_ASSERT(result.had_errors);
-    MYC_ASSERT(result.tokens.Size() >= 4u);
+    MYC_ASSERT(result.statistics.GetCharactersRead() >= 2u);
+    MYC_ASSERT(result.statistics.GetTokensProduced() >= 2u);
+    MYC_ASSERT(!result.had_errors);
+    MYC_ASSERT(result.tokens.Size() == 3u);
 }
 
 MYC_TEST(lexer_error_recovery_continues) {
@@ -69,7 +71,7 @@ MYC_TEST(lexer_error_recovery_continues) {
     myc::diagnostics::DiagnosticEngine engine;
     myc::diagnostics::DiagnosticEmitter emitter(engine);
 
-    const myc::FileId id = source_manager.AddMemoryBuffer("recover.myc", "!!");
+    const myc::FileId id = source_manager.AddMemoryBuffer("recover.myc", "\x01\x02");
     const myc::source::SourceBuffer* buffer = source_manager.GetBuffer(id);
     MYC_ASSERT(buffer != nullptr);
 
@@ -80,7 +82,7 @@ MYC_TEST(lexer_error_recovery_continues) {
     const myc::lexer::LexerResult result = lexer.Tokenize();
     MYC_ASSERT(result.had_errors);
     MYC_ASSERT(result.statistics.GetErrorsEncountered() == 2u);
-    MYC_ASSERT(result.tokens.IsAtEnd() == false || result.tokens.Size() > 0u);
+    MYC_ASSERT(result.tokens.Size() == 3u);
 }
 
 MYC_TEST(lexer_state_string_representation) {
@@ -89,12 +91,12 @@ MYC_TEST(lexer_state_string_representation) {
                   "InsideString");
 }
 
-MYC_TEST(scanner_registry_dispatch_not_handled) {
+MYC_TEST(scanner_registry_dispatch_unknown_character) {
     myc::source::SourceManager source_manager;
     myc::diagnostics::DiagnosticEngine engine;
     myc::diagnostics::DiagnosticEmitter emitter(engine);
 
-    const myc::FileId id = source_manager.AddMemoryBuffer("scan.myc", "z");
+    const myc::FileId id = source_manager.AddMemoryBuffer("scan.myc", "\x01");
     const myc::source::SourceBuffer* buffer = source_manager.GetBuffer(id);
     MYC_ASSERT(buffer != nullptr);
 
@@ -106,6 +108,7 @@ MYC_TEST(scanner_registry_dispatch_not_handled) {
 
     myc::lexer::ScannerRegistry registry;
     const myc::lexer::ScanResult result = registry.Dispatch(context);
-    MYC_ASSERT(result == myc::lexer::ScanResult::NotHandled);
+    MYC_ASSERT(result == myc::lexer::ScanResult::TokenProduced);
     MYC_ASSERT(stats.GetScannerCalls() > 0u);
+    MYC_ASSERT(!context.GetPendingTokens().empty());
 }
