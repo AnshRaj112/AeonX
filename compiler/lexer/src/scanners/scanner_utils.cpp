@@ -10,6 +10,38 @@ namespace {
 
 constexpr std::size_t kMaxOperatorLength = 4;
 
+[[nodiscard]] diagnostics::SourceSpan MakeDiagnosticSpan(LexerContext& context,
+                                                         std::size_t start,
+                                                         std::size_t end) {
+    diagnostics::SourceSpan diag_span;
+    const myc::FileId file_id = context.GetFileId().Value();
+    diag_span.file_id = file_id;
+
+    const source::SourceLocation src_start =
+        context.GetSourceManager().GetLocation(file_id, start);
+    const source::SourceLocation src_end = context.GetSourceManager().GetLocation(file_id, end);
+
+    if (const source::SourceFile* file = context.GetSourceManager().GetFile(file_id)) {
+        diag_span.start.filename = std::string(file->GetFilename());
+        diag_span.start.absolute_path = file->GetAbsolutePath().string();
+        diag_span.end.filename = diag_span.start.filename;
+        diag_span.end.absolute_path = diag_span.start.absolute_path;
+    }
+
+    diag_span.start.line = src_start.GetLine();
+    diag_span.start.column = src_start.GetColumn();
+    diag_span.end.line = src_end.GetLine();
+    diag_span.end.column = src_end.GetColumn();
+    diag_span.start_offset = start;
+    diag_span.end_offset = end;
+
+    if (const source::SourceBuffer* buffer = context.GetSourceManager().GetBuffer(file_id)) {
+        diag_span.source_length = buffer->GetSize();
+    }
+
+    return diag_span;
+}
+
 }  // namespace
 
 bool IsIdentifierStart(char32_t ch) noexcept {
@@ -100,13 +132,12 @@ void EmitLexicalError(LexerContext& context, std::size_t start, std::size_t end,
     context.MarkError();
     context.GetStatistics().RecordError();
 
-    const auto location =
-        context.GetSourceManager().GetLocation(context.GetFileId().Value(), start);
-    const auto span = MakeSpan(context, start, end);
-    (void)context.GetDiagnostics().EmitError(diagnostics::ErrorCode{"MYC0001"},
-                                             std::string(message));
-    (void)location;
-    (void)span;
+    const diagnostics::SourceSpan diag_span = MakeDiagnosticSpan(context, start, end);
+    (void)context.GetDiagnostics()
+        .Builder()
+        .Error(diagnostics::ErrorCode{"MYC0001"}, std::string(message))
+        .At(diag_span)
+        .Emit();
 }
 
 void PushErrorToken(LexerContext& context, std::size_t start, std::size_t end,

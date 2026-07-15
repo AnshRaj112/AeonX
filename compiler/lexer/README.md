@@ -84,7 +84,7 @@ classified as identifiers.
 
 Centralized sorted keyword database (`keyword.cpp`). Lookup is `O(log n)` binary
 search. Primitive types (`bool`, `int`, `string`, …) and keywords (`if`, `fn`,
-`struct`, …) share the same table.
+`func`, `struct`, `trait`, `mod`, `module`, …) share the same table.
 
 Future keywords are added by appending a sorted `MakeKeyword(...)` entry and
 relying on the compile-time `static_assert` sort check.

@@ -61,6 +61,7 @@ enum class TokenType : std::uint16_t {
     KwStruct,
     KwSuper,
     KwThrow,
+    KwTrait,
     KwTrue,
     KwTry,
     KwTypeof,

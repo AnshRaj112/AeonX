@@ -36,8 +36,8 @@ public:
 
     /// Runs the scan loop and returns tokens with collected statistics.
     ///
-    /// Tokenization rules are not implemented yet. The loop exercises character
-    /// streaming and scanner dispatch, then appends a terminating EOF token.
+    /// Dispatches category scanners until end-of-input, recovers from lexical
+    /// errors when configured, and appends a terminating EOF token.
     [[nodiscard]] LexerResult Tokenize();
 
     [[nodiscard]] const LexerStatistics& GetStatistics() const noexcept { return statistics_; }

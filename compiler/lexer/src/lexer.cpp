@@ -97,9 +97,29 @@ void Lexer::RecoverFromUnknownCharacter(LexerContext& context) {
     const auto location = unknown.GetLocation();
     const auto span = source_manager_.MakeSpan(location.GetFileId().Value(), start, end);
 
-    (void)context.GetDiagnostics().EmitError(
-        diagnostics::ErrorCode{"MYC0001"},
-        std::string("unexpected character in lexical analysis"));
+    diagnostics::SourceSpan diag_span;
+    diag_span.file_id = location.GetFileId().Value();
+    if (const source::SourceFile* file = source_manager_.GetFile(location.GetFileId().Value())) {
+        diag_span.start.filename = std::string(file->GetFilename());
+        diag_span.start.absolute_path = file->GetAbsolutePath().string();
+        diag_span.end.filename = diag_span.start.filename;
+        diag_span.end.absolute_path = diag_span.start.absolute_path;
+    }
+    diag_span.start.line = location.GetLine();
+    diag_span.start.column = location.GetColumn();
+    diag_span.end = diag_span.start;
+    diag_span.start_offset = start;
+    diag_span.end_offset = end;
+    if (const source::SourceBuffer* buffer = source_manager_.GetBuffer(location.GetFileId().Value())) {
+        diag_span.source_length = buffer->GetSize();
+    }
+
+    (void)context.GetDiagnostics()
+        .Builder()
+        .Error(diagnostics::ErrorCode{"MYC0001"},
+               "unexpected character in lexical analysis")
+        .At(diag_span)
+        .Emit();
 
     if (configuration_.ShouldContinueAfterErrors()) {
         context.PushToken(TokenFactory::MakeError(reader_.Slice(start, end), location, span,
