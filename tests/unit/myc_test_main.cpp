@@ -17,8 +17,10 @@ int TestRegistry::RunAll() {
         try {
             test.body();
             std::cout << "[ PASS ] " << test.name << '\n';
+            std::cout.flush();
         } catch (const std::exception& ex) {
             std::cerr << "[ FAIL ] " << test.name << ": " << ex.what() << '\n';
+            std::cerr.flush();
             ++failures;
         }
     }
